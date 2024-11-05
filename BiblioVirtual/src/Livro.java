@@ -1,5 +1,4 @@
 
-import java.util.List;
 
 
     public class Livro {
@@ -11,19 +10,15 @@ import java.util.List;
         private Categoria categoria = new Categoria();
         private int paginas;
         private double preço;
+        private boolean disponivel;
+        private Usuario dono = new Usuario();
 
-        public Livro pesquisarLivro(String titulo){
-            return null;
+        
+        public void editarLivro(){}
+
+        public boolean verificarDisponibilidade(){
+            return disponivel;
         }
-        public List<Livro> filtrar(List<Categoria> categorias){
-            return null;
-        }
-        public Livro buscarPorId(int id){
-            return null;
-        }
-        public void adicionarLivro(Livro novoLivro){}
-        public void removerLivro(int id){}
-        public void editarLivro(Livro livro){}
 
        }
        

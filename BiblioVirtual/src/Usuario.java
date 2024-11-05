@@ -1,14 +1,22 @@
 public class Usuario {
-
     private int idUsuario;
     private String nome;
-    private String senha;
     private String email;
-    private int quantEmprestimos;
-    private boolean autenticaçao;
+    private String senha;
 
-    public Usuario buscaPorId(int id){return null;}
+    public Usuario(int idUsuario, String nome, String email, String senha) {
+        this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
 
-    public Usuario infoPublicas(){ return null;}
-   
+    public void realizarEmprestimo(){}
+
+    public void removerEmprestimo(){}
+
+    public void solicitarEmprestimo(){}
+
+    public void devolverLivro(){}
+
 }
