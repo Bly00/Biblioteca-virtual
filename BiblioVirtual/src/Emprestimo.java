@@ -10,5 +10,7 @@ public class Emprestimo {
     private List<ItemEmprestimo> itensEmprestimo;
     private Usuario solicitante;
 
-    public void finalizarEmprestimo(){}
+    public void mostrarEmprestimo(){
+        //mostrará as infos do emprestimo feito
+    }
 }

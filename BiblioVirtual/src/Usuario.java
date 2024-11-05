@@ -12,12 +12,20 @@ public class Usuario {
     }
     public Usuario(){};
 
-    public void realizarEmprestimo(){}
+    public void realizarEmprestimo(){
+        //servirá para adicionar um novo livro para emprestimo
+    }
 
-    public void removerEmprestimo(){}
+    public void removerEmprestimo(){
+        //caso haja um livro q esse user tenha emprestado, ele podera retirar
+    }
 
-    public void solicitarEmprestimo(){}
+    public void solicitarEmprestimo(){
+        //criara um novo emprestimo no nome desse user
+    }
 
-    public void devolverLivro(){}
+    public void devolverLivro(){
+        //quando necessario, o user pode devolver o livro
+    }
 
 }

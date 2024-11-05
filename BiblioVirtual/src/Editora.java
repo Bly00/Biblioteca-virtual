@@ -6,7 +6,9 @@ public class Editora {
     private String nomeEditora;
     private String descriçaoEditora;
 
-    public void editarEditora(){}
+    public void editarEditora(){
+        //edita as infos da editora
+    }
    
    }
    

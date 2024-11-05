@@ -5,7 +5,7 @@ public class Autor {
     private String descriçaoAutor;
 
     public void editarAutor(){}
-    
+     //edita as infos do autor
    }
    
    

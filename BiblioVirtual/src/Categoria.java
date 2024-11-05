@@ -7,7 +7,9 @@ public class Categoria {
     private String nomeCategoria;
     private String descriçaoCategoria;
 
-    public void editarCategoria(){}
+    public void editarCategoria(){
+         //edita as infos da categoria
+    }
     
    }
    

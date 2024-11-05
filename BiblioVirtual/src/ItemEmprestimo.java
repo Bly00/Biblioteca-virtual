@@ -7,5 +7,7 @@ public class ItemEmprestimo {
     private Date devolucaoPrevista;
     private boolean devolvido;
 
-    public void atualizarStatus() {}
+    public void atualizarStatus(){
+        //quando o prazo finalizar, o item poderar ter ser statu modificado
+    }
 }

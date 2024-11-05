@@ -14,9 +14,12 @@ public class Livro {
     private Usuario dono = new Usuario();
 
     
-    public void editarLivro(){}
+    public void editarLivro(){
+        //edita as informaçoes antes passado na instanciaçao de um livro
+    }
 
     public boolean verificarDisponibilidade(){
+        //apenas mostrar se ele esta disponivel
         return disponivel;
     }
 
