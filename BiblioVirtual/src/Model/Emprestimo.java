@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public class Emprestimo {
     private List<ItemEmprestimo> itensEmprestimo;
     private Usuario solicitante;
 
-    public void mostrarEmprestimo(){
-        //mostrará as infos do emprestimo feito
-    }
+//    public void mostrarEmprestimo(){
+//        //mostrará as infos do emprestimo feito
+//    }
 }

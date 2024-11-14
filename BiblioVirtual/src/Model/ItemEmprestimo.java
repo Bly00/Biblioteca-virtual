@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.Date;
 
 public class ItemEmprestimo {
@@ -7,7 +9,7 @@ public class ItemEmprestimo {
     private Date devolucaoPrevista;
     private boolean devolvido;
 
-    public void atualizarStatus(){
-        //quando o prazo finalizar, o item poderar ter ser statu modificado
-    }
+//    public void atualizarStatus(){
+//        //quando o prazo finalizar, o item poderar ter ser statu modificado
+//    }
 }
