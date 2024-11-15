@@ -35,12 +35,15 @@ public class LivroRepository {
     }
 
     public Boolean existe(Integer id){
+        if(id == null)
+            return false;
+
        return livros.containsKey(id);
     }
 
     public void listaTodosLivros(){
         for(Integer key : livros.keySet()){
-            System.out.println("ID: " + key  + " - " + livros.get(key).toString());
+            System.out.println(livros.get(key).toString());
         }
     }
 

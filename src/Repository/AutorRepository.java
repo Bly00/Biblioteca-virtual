@@ -13,7 +13,7 @@ public class AutorRepository {
 
     private static AutorRepository instancia;
 
-    public AutorRepository getInstancia(){
+    public static AutorRepository getInstancia(){
         if(instancia == null){
             instancia = new AutorRepository();
         }
@@ -21,12 +21,33 @@ public class AutorRepository {
     }
     //--------------------------------------------------
 
-    Map<Integer, Autor> autores = new HashMap<>();
+    private Map<Integer, Autor> autores = new HashMap<>();
+    private Integer id = 0;
 
-    public void salvarAutor(Autor novoAutor){}
-    public void deletarAutor(Integer id){}
-    public Boolean existe(Integer id){return null;}
-    public void ListaTodosAutor(){}
+    public void salvarAutor(Autor novoAutor){
+        novoAutor.setIdAutor(id);
+        autores.put(novoAutor.getIdAutor(), novoAutor);
+
+        id++;
+
+    }
+
+    public void deletarAutor(Integer id){
+        autores.remove(id);
+    }
+
+    public Boolean existe(Integer id){
+        if(id == null)
+            return false;
+
+        return autores.containsKey(id);
+    }
+
+    public void ListaTodosAutor(){
+        for(Integer key : autores.keySet()){
+            System.out.println(autores.get(key).toString());
+        }
+    }
 
 
 }

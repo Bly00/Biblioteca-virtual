@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class    Autor {
 
-    private int idAutor;
+    private Integer idAutor;
     private String nomeAutor;
     private String descricaoAutor;
 
@@ -35,7 +35,13 @@ public class    Autor {
         this.nomeAutor = nomeAutor;
     }
 
-//    public void editarAutor(){
+    public void setIdAutor(int idAutor) {
+        this.idAutor = idAutor;
+    }
+
+
+
+    //    public void editarAutor(){
 //
 //        int op = 0;
 //        Scanner sc = new Scanner(System.in);
@@ -84,8 +90,7 @@ public class    Autor {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Id: " + idAutor + "\n");
-        sb.append("Nome: " + nomeAutor + "\n");
+        sb.append("Id: " + idAutor + " - Nome: " + nomeAutor + "\n\n");
         sb.append("Descriçao: " + descricaoAutor + "\n");
 
         return sb.toString();

@@ -11,19 +11,16 @@ public class Livro {
     private Editora editora;
     private Categoria categoria;
     private int paginas;
-    private double preço;
     private boolean disponivel;
     private Usuario dono;
 
-    public Livro(Autor autor, Categoria categoria, boolean disponivel, Usuario dono, Editora editora, int idLivro, int paginas, double preço, String tituloDoLivro) {
+    public Livro(String tituloDoLivro, Autor autor,  Editora editora, Categoria categoria, int paginas, Usuario dono) {
         this.autor = autor;
         this.categoria = categoria;
-        this.disponivel = disponivel;
+        this.disponivel = true;
         this.dono = dono;
         this.editora = editora;
-        this.idLivro = idLivro;
         this.paginas = paginas;
-        this.preço = preço;
         this.tituloDoLivro = tituloDoLivro;
     }
 
@@ -85,14 +82,6 @@ public class Livro {
         this.paginas = paginas;
     }
 
-    public double getPreço() {
-        return preço;
-    }
-
-    public void setPreço(double preço) {
-        this.preço = preço;
-    }
-
     public String getTituloDoLivro() {
         return tituloDoLivro;
     }
@@ -110,13 +99,13 @@ public class Livro {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Titulo: " + tituloDoLivro);
-        sb.append("\nAutor: " + autor + " - Editora: " + editora + " - Categoria: " + categoria);
+        sb.append("\nAutor: " + autor.getNomeAutor() + " - Editora: " + editora.getNomeEditora() + " - Categoria: " + categoria.getNomeCategoria());
         sb.append("\nPaginas: " + paginas);
-        sb.append("\nQuem emprestou: " + dono + "\n");
+        sb.append("\nQuem emprestou: " + dono.getNome() + "\n");
         if(disponivel){
-            sb.append("Disponivel: Sim");
+            sb.append("Disponivel: Sim\n");
         }else{
-            sb.append("Disponivel: Nao");
+            sb.append("Disponivel: Nao\n");
         }
 
         return sb.toString();

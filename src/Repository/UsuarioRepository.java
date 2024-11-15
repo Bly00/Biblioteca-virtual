@@ -12,7 +12,7 @@ public class UsuarioRepository{
 
     private static UsuarioRepository instancia;
 
-    public UsuarioRepository getInstancia(){
+    public static UsuarioRepository getInstancia(){
         if(instancia == null){
             instancia = new UsuarioRepository();
         }
@@ -39,7 +39,14 @@ public class UsuarioRepository{
     }
 
     public Boolean existe(Integer id){
+        if(id == null)
+            return false;
+
        return usuarios.containsKey(id);
+    }
+
+    public Usuario buscarUserId(Integer id){
+        return usuarios.get(id);
     }
 
     public void ListaTodosUsuarios(){

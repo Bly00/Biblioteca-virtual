@@ -1,19 +1,13 @@
 package Model;
 
 public class Categoria {
-    private int idCategoria;
+    private Integer idCategoria;
     private String nomeCategoria;
     private String descricaoCategoria;
 
-    private static Categoria instancia;
-
-    private Categoria() {}
-
-    public static Categoria getInstancia() {
-        if (instancia == null) {
-            instancia = new Categoria();
-        }
-        return instancia;
+    public Categoria(String nomeCategoria, String descricaoCategoria) {
+        this.descricaoCategoria = descricaoCategoria;
+        this.nomeCategoria = nomeCategoria;
     }
 
     public int getIdCategoria() {
@@ -38,6 +32,17 @@ public class Categoria {
 
     public void setDescricaoCategoria(String descricaoCategoria) {
         this.descricaoCategoria = descricaoCategoria;
+    }
+
+    public String toString(){
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Id: " + idCategoria + " - Nome: " + nomeCategoria + "\n\n");
+        sb.append("Descriçao: " + descricaoCategoria);
+
+        return sb.toString();
+
     }
 
 //    public void editarCategoria(String nome, String descricao) {

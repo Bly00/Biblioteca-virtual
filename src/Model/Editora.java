@@ -2,10 +2,14 @@ package Model;
 
 public class Editora {
 
-    private int idEditora;
+    private Integer idEditora;
     private String nomeEditora;
     private String descricaoEditora;
 
+    public Editora(String nomeEditora, String descricaoEditora) {
+        this.descricaoEditora = descricaoEditora;
+        this.nomeEditora = nomeEditora;
+    }
 
     public int getIdEditora() {
         return idEditora;
@@ -29,6 +33,16 @@ public class Editora {
 
     public void setDescricaoEditora(String descricaoEditora) {
         this.descricaoEditora = descricaoEditora;
+    }
+
+    public String toString(){
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Id: " + idEditora + " - Nome: " + nomeEditora + "\n\n");
+        sb.append("Descriçao: " + descricaoEditora + "\n");
+
+        return sb.toString();
     }
 
 //    public void editarEditora(String nome, String descricao) {

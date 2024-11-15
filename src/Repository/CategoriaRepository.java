@@ -13,7 +13,7 @@ public class CategoriaRepository {
 
         private static CategoriaRepository instancia;
 
-        public CategoriaRepository getInstancia(){
+        public static CategoriaRepository getInstancia(){
             if(instancia == null){
                 instancia = new CategoriaRepository();
             }
@@ -21,12 +21,32 @@ public class CategoriaRepository {
         }
         //--------------------------------------------------
 
-        Map<Integer, Categoria> categorias = new HashMap<>();
+        private Map<Integer, Categoria> categorias = new HashMap<>();
+        private Integer id = 0;
 
-        public void salvarCategoria(Categoria novoCategoria){}
-        public void deletarCategoria(Integer id){}
-        public Boolean existe(){return null;}
-        public void ListaTodosCategoria(){}
+        public void salvarCategoria(Categoria novaCategoria){
+            novaCategoria.setIdCategoria(id);
+            categorias.put(novaCategoria.getIdCategoria(), novaCategoria);
+
+            id++;
+        }
+
+        public void deletarCategoria(Integer id){
+            categorias.remove(id);
+        }
+
+        public Boolean existe(Integer id){
+            if(id == null)
+                return false;
+
+            return categorias.containsKey(id);
+        }
+
+        public void ListaTodosCategoria(){
+            for(Integer key : categorias.keySet()){
+                System.out.println(categorias.get(key));
+            }
+        }
 
 
     }
