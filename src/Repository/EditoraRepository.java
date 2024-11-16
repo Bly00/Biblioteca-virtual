@@ -21,7 +21,7 @@ public class EditoraRepository {
     //--------------------------------------------------
 
     private Map<Integer, Editora> editoras = new HashMap<>();
-    private Integer id = 0;
+    private Integer id = 1;
 
     public void salvarEditora(Editora novaEditora){
         novaEditora.setIdEditora(id);
@@ -42,9 +42,19 @@ public class EditoraRepository {
     }
 
     public void ListaTodasEditora(){
+
+        if(editoras.isEmpty()){
+            System.out.println("Nao ha editoras registrados");
+            return;
+        }
+
         for(Integer key : editoras.keySet()){
             System.out.println(editoras.get(key).toString());
         }
+    }
+
+    public Editora buscarPorId(Integer id){
+        return editoras.get(id);
     }
 
 

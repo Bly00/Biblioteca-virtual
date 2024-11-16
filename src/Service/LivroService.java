@@ -3,6 +3,8 @@ package Service;
 import Model.*;
 import Repository.*;
 
+import java.util.List;
+
 public class LivroService {
 
     //Singleton
@@ -52,6 +54,14 @@ public class LivroService {
         LivroRepository.getInstancia().salvarLivro(livro);
 
         System.out.println("Livro cadastrado com sucesso\n");
+    }
+
+    public void mostrarLivros(){
+        LivroRepository.getInstancia().listaTodosLivros();
+    }
+
+    public List<Livro> getLivros(){
+        return LivroRepository.getInstancia().getLivrosToList();
     }
 
 }

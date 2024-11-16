@@ -22,7 +22,7 @@ public class CategoriaRepository {
         //--------------------------------------------------
 
         private Map<Integer, Categoria> categorias = new HashMap<>();
-        private Integer id = 0;
+        private Integer id = 1;
 
         public void salvarCategoria(Categoria novaCategoria){
             novaCategoria.setIdCategoria(id);
@@ -43,9 +43,19 @@ public class CategoriaRepository {
         }
 
         public void ListaTodosCategoria(){
+
+            if(categorias.isEmpty()){
+                System.out.println("Nao ha categorias registrados");
+                return;
+            }
+
             for(Integer key : categorias.keySet()){
                 System.out.println(categorias.get(key));
             }
+        }
+
+        public Categoria buscarPorId(Integer id){
+            return categorias.get(id);
         }
 
 

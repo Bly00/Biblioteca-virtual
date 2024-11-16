@@ -65,22 +65,15 @@ public class Emprestimo {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Id: " + idEmprestimo);
-        sb.append("\nData do empestimo: " + diaEmprestimo.format(dataEmprestimo));
-        sb.append("\nData de devoluçao: " + diaDevolucao.format(dataDevolucao));
-        sb.append("\nSolicitante: " +  solicitante.getNome() + "(ID: " + solicitante.getIdUsuario() + ")\n");
+        sb.append(" - Data do empestimo: " + diaEmprestimo.format(dataEmprestimo));
+        sb.append(" - Data de devoluçao: " + diaDevolucao.format(dataDevolucao));
+        sb.append("\nSolicitante: " +  solicitante.getNome() + " - (ID: " + solicitante.getIdUsuario() + ")\n");
 
 
-
-        if(itensEmprestimo != null){
-
-        System.out.println("Livros pegos:\n");
+        System.out.println("Livros agregados:\n");
 
         for(ItemEmprestimo item : itensEmprestimo){
             sb.append(itensEmprestimo.toString());
-        }
-
-        }else{
-            sb.append("Nenhum item na lista");
         }
 
         return sb.toString();

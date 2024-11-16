@@ -21,7 +21,7 @@ public class EmprestimoRepository {
     //--------------------------------------------------
 
     private Map<Integer, Emprestimo> emprestimos = new HashMap<>();
-    private Integer id = 0;
+    private Integer id = 1;
 
     public void salvarEmprestimo(Emprestimo novoEmpestimo){
         novoEmpestimo.setIdEmprestimo(id);
@@ -38,10 +38,19 @@ public class EmprestimoRepository {
     }
 
     public void ListaTodosEmprestimo(){
+
+        if(emprestimos.isEmpty()){
+            System.out.println("Nao ha emprestimos registrados");
+            return;
+        }
+
         for(Integer key : emprestimos.keySet()){
             System.out.println(emprestimos.get(key).toString());
         }
+
     }
+
+
 
 
 }

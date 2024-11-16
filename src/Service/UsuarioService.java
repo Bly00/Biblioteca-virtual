@@ -5,6 +5,8 @@ import Model.*;
 import Repository.LivroRepository;
 import Repository.UsuarioRepository;
 
+import java.util.List;
+
 public class UsuarioService {
 
     //Singleton
@@ -23,7 +25,11 @@ public class UsuarioService {
         LivroService.getInstancia().cadastrarLivro(titulo, autor, editora, categoria, paginas, dono);
     }
 
-    public void fazerEmprestimo(){}
+//    public void fazerEmprestimo(List<ItemEmprestimo>) {
+//
+//        return null;
+//
+//    }
 
 
     public void devolverLivro(){}

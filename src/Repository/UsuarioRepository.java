@@ -23,7 +23,7 @@ public class UsuarioRepository{
 
 
     private Map<Integer, Usuario> usuarios = new HashMap<>();
-    private Integer idUsuario = 0;
+    private Integer idUsuario = 1;
 
 
     public void salvarUsuario(Usuario novoUsuario){
@@ -50,6 +50,12 @@ public class UsuarioRepository{
     }
 
     public void ListaTodosUsuarios(){
+
+        if(usuarios.isEmpty()){
+            System.out.println("Nao ha usuarios registrados");
+            return;
+        }
+
         for(Integer key : usuarios.keySet()){
             System.out.println("Id: " + key + usuarios.get(key).toString());
         }

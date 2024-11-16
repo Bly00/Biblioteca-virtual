@@ -22,7 +22,7 @@ public class AutorRepository {
     //--------------------------------------------------
 
     private Map<Integer, Autor> autores = new HashMap<>();
-    private Integer id = 0;
+    private Integer id = 1;
 
     public void salvarAutor(Autor novoAutor){
         novoAutor.setIdAutor(id);
@@ -44,9 +44,19 @@ public class AutorRepository {
     }
 
     public void ListaTodosAutor(){
+
+        if(autores.isEmpty()){
+            System.out.println("Nao ha autores registrados");
+            return;
+        }
+
         for(Integer key : autores.keySet()){
             System.out.println(autores.get(key).toString());
         }
+    }
+
+    public Autor buscarPorId(Integer id){
+        return autores.get(id);
     }
 
 
