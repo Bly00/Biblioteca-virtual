@@ -2,6 +2,7 @@ package Service;
 
 import Model.ItemEmprestimo;
 import Model.Livro;
+import Repository.ItemEmprestimoRepository;
 
 import java.util.Date;
 
@@ -20,7 +21,10 @@ public class ItemEmprestimoService {
     //-----------------------------------------
 
     public ItemEmprestimo criarItemEmprestimo(Livro livroPego){
-        return new ItemEmprestimo(false, livroPego);
+        ItemEmprestimo i = new ItemEmprestimo(false, livroPego);
+        ItemEmprestimoRepository.getInstancia().salvarItem(i);
+        return i;
+
     }
 
 }

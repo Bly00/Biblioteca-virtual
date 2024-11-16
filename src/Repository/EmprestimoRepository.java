@@ -2,7 +2,9 @@ package Repository;
 
 import Model.Emprestimo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EmprestimoRepository {
@@ -48,6 +50,10 @@ public class EmprestimoRepository {
             System.out.println(emprestimos.get(key).toString());
         }
 
+    }
+
+    public List<Emprestimo> todosEmprestimoToList(){
+        return new ArrayList<>(emprestimos.values());
     }
 
 

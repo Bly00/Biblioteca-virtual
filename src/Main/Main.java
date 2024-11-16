@@ -1,5 +1,6 @@
 package Main;
 
+import Model.Emprestimo;
 import Model.Livro;
 import Model.Usuario;
 import Repository.*;
@@ -16,7 +17,7 @@ public class Main{
         Scanner sc = new Scanner(System.in);
 
 
-          Usuario defalt =   UsuarioService.getInstancia().cadasstraUsuario("Defalt", "Dealt@gmail.com", "Defalt123");
+          Usuario Admin =   UsuarioService.getInstancia().cadasstraUsuario("Admin", "Admin@gmail.com", "Admin123");
 
 
         int opCasos = 0;
@@ -27,7 +28,7 @@ public class Main{
 
         do{//Loop principal
 
-            System.out.println("1 - Amostrar\n2 - Cadastro\n3 - Funcoes de emprestimo\n0 - Sair");
+            System.out.println("1 - Mostrar\n2 - Cadastro\n3 - Funcoes de emprestimo\n0 - Sair");
             opCasos = sc.nextInt();
 
             switch (opCasos){//escolhas de menu
@@ -130,7 +131,7 @@ public class Main{
                         int paginas = sc.nextInt();
                         sc.nextLine();
 
-                       UsuarioService.getInstancia().emprestarLivro(titulo, AutorRepository.getInstancia().buscarPorId(idAutor),EditoraRepository.getInstancia().buscarPorId(idEditora),CategoriaRepository.getInstancia().buscarPorId(idCategoria), paginas,defalt);
+                       UsuarioService.getInstancia().emprestarLivro(titulo, AutorRepository.getInstancia().buscarPorId(idAutor),EditoraRepository.getInstancia().buscarPorId(idEditora),CategoriaRepository.getInstancia().buscarPorId(idCategoria), paginas, Admin);
 
                                 break;
 
@@ -184,11 +185,11 @@ public class Main{
                                 int escolhaLivros = 1;
                                 List<Livro> escolhas = new ArrayList<>();
 
-                                System.out.println("Livros disponiveis:");
+                                System.out.println("Livros:");
                                 LivroService.getInstancia().mostrarLivros();
                                 System.out.println("Escolha os livros pelo ID // 0 - Sair");
 
-                                while(escolhaLivros != 0){
+                                while(true){
 
                                     System.out.print("Digite o ID:");
                                     escolhaLivros = sc.nextInt();
@@ -201,7 +202,13 @@ public class Main{
 
                                 }
 
-                                    EmprestimoService.getInstancia().criarEmprestimo(defalt, escolhas);
+                                    EmprestimoService.getInstancia().criarEmprestimo(Admin, escolhas);
+
+                                break;
+
+                            case 2:
+
+
 
                                 break;
 
