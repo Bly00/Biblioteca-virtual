@@ -1,5 +1,6 @@
 package Repository;
 import Model.Livro;
+import Service.LivroService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,30 +38,25 @@ public class LivroRepository {
     }
 
     public Boolean existe(Integer id){
-        if(id == null)
-            return false;
+        if(id == null){return false;}
 
        return livros.containsKey(id);
     }
 
-    public void listaTodosLivros(){
-
-        if(livros.isEmpty()){
-            System.out.println("Nao ha livros registrados");
-            return;
-        }
-
-        for(Integer key : livros.keySet()){
-            System.out.println(livros.get(key).toString());
-        }
-    }
-
-    public List<Livro> getLivrosToList(){
+    public List<Livro> getLivros(){
         return new ArrayList<>(this.livros.values());
     }
 
-    public Livro buscarPirUd(Integer id){
-        return livros.get(id);
+    public Livro buscarPorId(Integer id){
+
+        for(Livro l : getLivros()){
+            if(l.getIdLivro() == id){
+                return l;
+            }
+        }
+
+        return null;
+
     }
 
 

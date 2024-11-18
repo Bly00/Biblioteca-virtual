@@ -56,12 +56,17 @@ public class LivroService {
         System.out.println("Livro cadastrado com sucesso\n");
     }
 
-    public void mostrarLivros(){
-        LivroRepository.getInstancia().listaTodosLivros();
-    }
 
     public List<Livro> getLivros(){
-        return LivroRepository.getInstancia().getLivrosToList();
+        return LivroRepository.getInstancia().getLivros();
+    }
+
+    public void removerLivro(Integer id){
+        LivroRepository.getInstancia().removerLivro(id);
+    }
+
+    public Livro buscarPorId(Integer id) {
+        return LivroRepository.getInstancia().buscarPorId(id);
     }
 
 }

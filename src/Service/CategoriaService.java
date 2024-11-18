@@ -2,6 +2,9 @@ package Service;
 
 import Model.Categoria;
 import Repository.CategoriaRepository;
+import Repository.EditoraRepository;
+
+import java.util.List;
 
 public class CategoriaService {
 
@@ -31,6 +34,14 @@ public class CategoriaService {
         CategoriaRepository.getInstancia().salvarCategoria(categoria);
         return categoria;
 
+    }
+
+    public List<Categoria> listaCategorias(){
+
+    }
+
+    public Categoria buscarPorId(Integer id){
+        return CategoriaRepository.getInstancia().buscarPorId(id);
     }
 
 }

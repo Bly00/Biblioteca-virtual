@@ -118,10 +118,10 @@ public class EmprestimoService {
 
         for(Livro l : pedidos){
 
-            if(LivroRepository.getInstancia().buscarPirUd(l.getIdLivro()).isDisponivel()){
-                pegos.add(LivroRepository.getInstancia().buscarPirUd(l.getIdLivro()));
+            if(LivroRepository.getInstancia().buscarPorId(l.getIdLivro()).isDisponivel()){
+                pegos.add(LivroRepository.getInstancia().buscarPorId(l.getIdLivro()));
             }else{
-                System.out.println("Livro: " + LivroRepository.getInstancia().buscarPirUd(l.getIdLivro()).getTituloDoLivro() + " nao esta disponivel");
+                System.out.println("Livro: " + LivroRepository.getInstancia().buscarPorId(l.getIdLivro()).getTituloDoLivro() + " nao esta disponivel");
                 erro++;
             }
 

@@ -3,6 +3,8 @@ package Service;
 import Model.Autor;
 import Repository.AutorRepository;
 
+import java.util.List;
+
 public class AutorService {
 
     //Singleton
@@ -46,6 +48,18 @@ public class AutorService {
         }else{
             AutorRepository.getInstancia().deletarAutor(id);
         }
+    }
+
+    public List<Autor> getAutores(){
+        if(AutorRepository.getInstancia().getAutores() != null){
+            return AutorRepository.getInstancia().getAutores();
+        } else{
+            return null;
+        }
+    }
+
+    public Autor buscarPorId(Integer id){
+            return AutorRepository.getInstancia().buscarPorId(id);
     }
 
 }

@@ -2,7 +2,9 @@ package Repository;
 
 import Model.Editora;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EditoraRepository {
@@ -41,16 +43,8 @@ public class EditoraRepository {
         return editoras.containsKey(id);
     }
 
-    public void ListaTodasEditora(){
-
-        if(editoras.isEmpty()){
-            System.out.println("Nao ha editoras registrados");
-            return;
-        }
-
-        for(Integer key : editoras.keySet()){
-            System.out.println(editoras.get(key).toString());
-        }
+    public List<Editora> listaEditora(){
+        return new ArrayList<>(editoras.values());
     }
 
     public Editora buscarPorId(Integer id){

@@ -2,7 +2,9 @@ package Repository;
 
 import Model.Autor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AutorRepository {
@@ -43,16 +45,8 @@ public class AutorRepository {
         return autores.containsKey(id);
     }
 
-    public void ListaTodosAutor(){
-
-        if(autores.isEmpty()){
-            System.out.println("Nao ha autores registrados");
-            return;
-        }
-
-        for(Integer key : autores.keySet()){
-            System.out.println(autores.get(key).toString());
-        }
+    public List<Autor> getAutores(){
+        return new ArrayList<>(autores.values());
     }
 
     public Autor buscarPorId(Integer id){

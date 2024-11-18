@@ -4,6 +4,7 @@ import Model.Editora;
 import Repository.EditoraRepository;
 
 import javax.xml.stream.events.EndDocument;
+import java.util.List;
 
 public class EditoraService {
 
@@ -33,6 +34,18 @@ public class EditoraService {
         EditoraRepository.getInstancia().salvarEditora(editora);
         return editora;
 
+    }
+
+    public List<Editora> listaEditora(){
+        if(EditoraRepository.getInstancia().listaEditora() != null){
+            return EditoraRepository.getInstancia().listaEditora();
+        }else{
+            return null;
+        }
+    }
+
+    public Editora buscarPorId(Integer id){
+        return EditoraRepository.getInstancia().buscarPorId(id);
     }
 
 }

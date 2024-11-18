@@ -2,7 +2,9 @@ package Repository;
 
 import Model.Categoria;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CategoriaRepository {
@@ -42,22 +44,13 @@ public class CategoriaRepository {
             return categorias.containsKey(id);
         }
 
-        public void ListaTodosCategoria(){
-
-            if(categorias.isEmpty()){
-                System.out.println("Nao ha categorias registrados");
-                return;
-            }
-
-            for(Integer key : categorias.keySet()){
-                System.out.println(categorias.get(key));
-            }
+        public List<Categoria> ListaCategoria(){
+           return new ArrayList<>(categorias.values());
         }
 
         public Categoria buscarPorId(Integer id){
             return categorias.get(id);
         }
-
 
     }
 
