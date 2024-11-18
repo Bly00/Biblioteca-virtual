@@ -44,7 +44,7 @@ public class CategoriaRepository {
             return categorias.containsKey(id);
         }
 
-        public List<Categoria> ListaCategoria(){
+        public List<Categoria> ListaCategorias(){
            return new ArrayList<>(categorias.values());
         }
 

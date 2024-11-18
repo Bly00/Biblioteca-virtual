@@ -2,7 +2,6 @@ package Service;
 
 import Model.Categoria;
 import Repository.CategoriaRepository;
-import Repository.EditoraRepository;
 
 import java.util.List;
 
@@ -20,24 +19,31 @@ public class CategoriaService {
     }
     //-----------------------------------------
 
-    public Categoria cadastrarCategoria(String nome, String descricao){
+    public void adicionar(String nome, String descricao){
         if(nome == null){
             System.out.println("Erro: O nome nao foi preenchido");
-            return null;
+            return;
         }
         if(descricao == null){
             System.out.println("Erro: A descriçao nao foi preenchido");
-            return null;
+            return;
         }
 
         Categoria categoria = new Categoria(nome, descricao);
         CategoriaRepository.getInstancia().salvarCategoria(categoria);
-        return categoria;
 
     }
 
-    public List<Categoria> listaCategorias(){
+    public void remover(Integer id){
+        CategoriaService.getInstancia().remover(id);
+    }
 
+    public List<Categoria> listar(){
+        if(!CategoriaRepository.getInstancia().ListaCategorias().isEmpty()){
+            return CategoriaRepository.getInstancia().ListaCategorias();
+        }else{
+            return null;
+        }
     }
 
     public Categoria buscarPorId(Integer id){

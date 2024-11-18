@@ -51,7 +51,7 @@ public class AutorService {
     }
 
     public List<Autor> getAutores(){
-        if(AutorRepository.getInstancia().getAutores() != null){
+        if(!AutorRepository.getInstancia().getAutores().isEmpty()){
             return AutorRepository.getInstancia().getAutores();
         } else{
             return null;
@@ -60,6 +60,19 @@ public class AutorService {
 
     public Autor buscarPorId(Integer id){
             return AutorRepository.getInstancia().buscarPorId(id);
+    }
+
+    public void editar(Integer id, String novoNome, String novaDescricao){
+
+        Autor a = AutorService.getInstancia().buscarPorId(id);
+
+        if(novoNome != null){
+            a.setNomeAutor(novoNome);
+        }
+        if(novaDescricao != null){
+            a.setDescriçaoAutor(novaDescricao);
+        }
+
     }
 
 }

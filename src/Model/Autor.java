@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.Scanner;
-
 public class    Autor {
 
     private Integer idAutor;
@@ -15,7 +13,7 @@ public class    Autor {
         this.nomeAutor = nomeAutor;
     }
 
-    public String getDescriçaoAutor() {
+    public String getDescricaoAutor() {
         return descricaoAutor;
     }
 

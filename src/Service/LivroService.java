@@ -20,7 +20,7 @@ public class LivroService {
     }
     //--------------------------------------
 
-    public void cadastrarLivro(String titulo, Autor autor, Editora editora, Categoria categoria, Integer paginas, Usuario dono){
+    public void adicionarLivro(String titulo, Autor autor, Editora editora, Categoria categoria, Integer paginas, Usuario dono){
 
         if(titulo == null){
             System.out.println("Erro: Titulo nao informado");
@@ -61,12 +61,36 @@ public class LivroService {
         return LivroRepository.getInstancia().getLivros();
     }
 
-    public void removerLivro(Integer id){
+    public void remover(Integer id){
         LivroRepository.getInstancia().removerLivro(id);
     }
 
     public Livro buscarPorId(Integer id) {
         return LivroRepository.getInstancia().buscarPorId(id);
+    }
+
+    public void editar(Integer id, String novoTitulo, Autor novoAutor, Editora novaEditora, Categoria novaCategoria, Integer paginas, Usuario novoDono){
+
+        Livro l = LivroService.getInstancia().buscarPorId(id);
+
+        if(novoTitulo != null){
+            l.setTituloDoLivro(novoTitulo);
+        }
+        if(novoAutor != null){
+            l.setAutor(novoAutor);
+        }
+        if(novaEditora != null){
+            l.setEditora(novaEditora);
+        }
+        if(novaCategoria != null){
+            l.setCategoria(novaCategoria);
+        }
+        if(paginas != 0){
+            l.setPaginas(paginas);
+        }
+        if(novoDono != null){
+            l.setDono(novoDono);
+        }
     }
 
 }

@@ -2,7 +2,9 @@ package Repository;
 
 import Model.Usuario;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UsuarioRepository{
@@ -49,16 +51,8 @@ public class UsuarioRepository{
         return usuarios.get(id);
     }
 
-    public void ListaTodosUsuarios(){
-
-        if(usuarios.isEmpty()){
-            System.out.println("Nao ha usuarios registrados");
-            return;
-        }
-
-        for(Integer key : usuarios.keySet()){
-            System.out.println("Id: " + key + usuarios.get(key).toString());
-        }
+    public List<Usuario> Listar(){
+        return new ArrayList<>(usuarios.values());
     }
 
 
