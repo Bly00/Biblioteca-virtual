@@ -17,7 +17,7 @@ public class    Autor {
         return descricaoAutor;
     }
 
-    public void setDescriçaoAutor(String descriçaoAutor) {
+    public void setDescricaoAutor(String descriçaoAutor) {
         this.descricaoAutor = descriçaoAutor;
     }
 

@@ -67,7 +67,7 @@ public class UsuarioController {
         System.out.print("Senha: ");
         senha = sc.nextLine();
 
-        UsuarioService.getInstancia().cadastraUsuario(nome, email, senha);
+        UsuarioService.getInstancia().adicionar(nome, email, senha);
     }
 
     public void remover(){
@@ -84,7 +84,10 @@ public class UsuarioController {
 
     public void editar(){
 
-        if(!UsuarioService.getInstancia().listar().isEmpty()){
+        if(UsuarioService.getInstancia().listar().isEmpty()){
+            System.out.println("Nao ha usuarios cadastrados");
+            return;
+        }
 
             String novoNome = null;
             String novoEmail = null;
@@ -95,34 +98,43 @@ public class UsuarioController {
 
             System.out.println("Id do usuario que sera editado");
             UsuarioController.getInstance().listar();
-            Usuario u = UsuarioService.getInstancia().buscarPorId(sc.nextInt());
+
+            op = sc.nextInt();
+            sc.nextLine();
+
+            Usuario u = UsuarioService.getInstancia().buscarPorId(op);
 
             System.out.println("Nome atual: " + u.getNome() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-            if (sc.nextInt() == 1) {
+            op = sc.nextInt();
+            sc.nextLine();
+
+            if (op == 1) {
                 System.out.print("Novo nome: ");
                 novoNome = sc.nextLine();
             }
 
             System.out.println("Email atual: " + u.getEmail() + "Deseja mudar\n1 - Sim\n2 - Nao");
 
-            if (sc.nextInt() == 1) {
+            op = sc.nextInt();
+            sc.nextLine();
+
+            if (op == 1) {
                 System.out.print("Novo email: ");
                 novoEmail = sc.nextLine();
             }
 
             System.out.println("Senha atual: " + u.getSenha() + "Deseja mudar\n1 - Sim\n2 - Nao");
 
-            if (sc.nextInt() == 1) {
+            op = sc.nextInt();
+            sc.nextLine();
+
+            if (op == 1) {
                 System.out.print("Nova senha: ");
                 novaSenha = sc.nextLine();
             }
 
             UsuarioService.getInstancia().editar(u.getIdUsuario(), novoNome, novoEmail, novaSenha);
-
-        }else{
-            System.out.println("Nao ha usuarios para editar");
-        }
 
 
     }

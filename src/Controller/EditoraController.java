@@ -99,6 +99,7 @@ public class EditoraController {
 
         String nonoNome = null;
         String novaDescricao = null;
+        int op = 0;
 
         if(!EditoraService.getInstancia().listar().isEmpty()){
 
@@ -113,14 +114,20 @@ public class EditoraController {
 
                 System.out.println("Nome atual: " + e.getNomeEditora() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if(sc.nextInt() == 1){
+                op = sc.nextInt();
+                sc.nextLine();
+
+                if(op == 1){
                 System.out.print("Novo nome: ");
                 nonoNome = sc.nextLine();
                 }
 
                 System.out.println("Descricao atual: " + e.getDescricaoEditora() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if(sc.nextInt() == 1){
+                op = sc.nextInt();
+                sc.nextLine();
+
+                if(op == 1){
                     System.out.print("Nova descriçao: ");
                     novaDescricao = sc.nextLine();
                 }

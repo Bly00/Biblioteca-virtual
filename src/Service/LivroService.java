@@ -20,38 +20,38 @@ public class LivroService {
     }
     //--------------------------------------
 
-    public void adicionarLivro(String titulo, Autor autor, Editora editora, Categoria categoria, Integer paginas, Usuario dono){
+    public void adicionarLivro(Livro l){
 
-        if(titulo == null){
+        if(l.getTituloDoLivro() == null){
             System.out.println("Erro: Titulo nao informado");
             return;
         }
-        if(autor == null || !AutorRepository.getInstancia().existe(autor.getIdAutor())){
+        if(l.getAutor() == null || !AutorRepository.getInstancia().existe(l.getAutor().getIdAutor())){
             System.out.println("Erro: Autor nao existe ou nao resgistrada");
             return;
         }
 
-        if(editora == null || !EditoraRepository.getInstancia().existe(editora.getIdEditora())){
+        if(l.getEditora() == null || !EditoraRepository.getInstancia().existe(l.getEditora().getIdEditora())){
             System.out.println("Erro: Editora nao existe ou nao resgistrada");
             return;
         }
 
-        if(categoria == null || !CategoriaRepository.getInstancia().existe(categoria.getIdCategoria())){
+        if(l.getCategoria() == null || !CategoriaRepository.getInstancia().existe(l.getCategoria().getIdCategoria())){
             System.out.println("Erro: Categoria nao existe ou nao resgistrada");
             return;
         }
-        if(dono == null || !UsuarioRepository.getInstancia().existe(dono.getIdUsuario())){
+        if(l.getDono() == null || !UsuarioRepository.getInstancia().existe(l.getDono().getIdUsuario())){
             System.out.println("Erro: Dono nao existe ou nao registrado");
             return;
         }
-        if(paginas == null){
+        if(l.getPaginas() == 0){
             System.out.println("Erro: Paginas nao informadas");
             return;
         }
 
-        Livro livro = new Livro(titulo, autor, editora, categoria, paginas, dono);
 
-        LivroRepository.getInstancia().salvarLivro(livro);
+
+        LivroRepository.getInstancia().salvarLivro(l);
 
         System.out.println("Livro cadastrado com sucesso\n");
     }

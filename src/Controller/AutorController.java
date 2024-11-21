@@ -82,6 +82,8 @@ public class AutorController {
 
     public void editar(){
 
+        int op = 0;
+
         String nonoNome = null;
         String novaDescricao = null;
 
@@ -99,14 +101,20 @@ public class AutorController {
 
                 System.out.println("Nome atual: " + a.getNomeAutor() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if(sc.nextInt() == 1){
+                op = sc.nextInt();
+                sc.nextLine();
+
+                if(op == 1){
                     System.out.print("Novo nome: ");
                     nonoNome = sc.nextLine();
                 }
 
                 System.out.println("Descricao atual: " + a.getDescricaoAutor() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if(sc.nextInt() == 1){
+                op = sc.nextInt();
+                sc.nextLine();
+
+                if(op == 1){
                     System.out.print("Nova descriçao: ");
                     novaDescricao = sc.nextLine();
                 }

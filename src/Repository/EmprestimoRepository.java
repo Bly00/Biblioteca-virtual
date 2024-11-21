@@ -56,6 +56,10 @@ public class EmprestimoRepository {
         return new ArrayList<>(emprestimos.values());
     }
 
+    public Emprestimo buscaPorId(Integer id){
+        return emprestimos.get(id);
+    }
+
 
 
 

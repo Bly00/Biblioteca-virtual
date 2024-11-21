@@ -173,8 +173,9 @@ public class LivroController {
             System.out.println("Nao ha usuario, por favo adicione um usuario");
         }
 
-        LivroService.getInstancia().adicionarLivro(titulo, a, e, c, paginas , u);
+        Livro livro = new Livro(titulo, a, e, c, paginas, u);
 
+        LivroService.getInstancia().adicionarLivro(livro);
         }
 
     public void remover(){
@@ -202,25 +203,40 @@ public class LivroController {
         Integer paginas = null;
         Usuario novoDono = null;
 
-        if(!LivroService.getInstancia().getLivros().isEmpty()){ //verifica se ha livros para editar
+        if(LivroService.getInstancia().getLivros().isEmpty()){
+            System.out.println("Nao ha livros para serem editados");
+            return;
+        }
 
             System.out.println("Id do livro que sera editado: ");
 
-            Livro l = LivroService.getInstancia().buscarPorId(sc.nextInt());
+            op = sc.nextInt();
             sc.nextLine();
 
-            if(l != null) {
+            Livro l = LivroService.getInstancia().buscarPorId(op);
+            sc.nextLine();
+
+            if(l == null) {
+                System.out.println("Id invalido");
+                return;
+            }
 
                 System.out.println("Titulo atual: " + l.getTituloDoLivro() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if (sc.nextInt() == 1) {
+                op = sc.nextInt();
+                sc.nextLine();
+
+                if (op == 1) {
                     System.out.print("Novo titulo: ");
                     novoTitulo = sc.nextLine();
                 }
 
                 System.out.println("Autor atual: " + l.getAutor().getNomeAutor() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if (sc.nextInt() == 1) {
+                op = sc.nextInt();
+                sc.nextLine();
+
+                if (op == 1) {
                     System.out.print("Novo autor: ");
                     AutorController.getInstancia().listar();
                     System.out.println("Escolha o id: ");
@@ -238,7 +254,7 @@ public class LivroController {
 
                 System.out.println("Editora atual: " + l.getEditora().getNomeEditora() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if (sc.nextInt() == 1) {
+                if (op == 1) {
                     System.out.print("Nova editora: ");
                     EditoraController.getInstancia().listar();
                     System.out.println("Escolha o id: ");
@@ -256,7 +272,10 @@ public class LivroController {
 
                 System.out.println("Categoria atual: " + l.getCategoria().getNomeCategoria() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if (sc.nextInt() == 1) {
+                op = sc.nextInt();
+                sc.nextLine();
+
+                if (op == 1) {
                     System.out.print("Nova categoria: ");
                     CategoriaController.getInstancia().listar();
                     System.out.println("Escolha o id: ");
@@ -274,14 +293,20 @@ public class LivroController {
 
                 System.out.println("Quantidade de paginas atuais: " + l.getPaginas() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if (sc.nextInt() == 1){
+                op = sc.nextInt();
+                sc.nextLine();
+
+                if (op == 1){
                     System.out.print("Nova quantidade de paginas: ");
                     paginas = sc.nextInt();
                 }
 
                 System.out.println("Dono atual: " + l.getDono().getNome() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
 
-                if (sc.nextInt() == 1) {
+                op = sc.nextInt();
+                sc.nextLine();
+
+                if (op == 1) {
                     System.out.print("Novo dono: ");
                     UsuarioController.getInstance().listar();
                     System.out.println("Escolha o id: ");
@@ -296,14 +321,11 @@ public class LivroController {
                         System.out.println("Id invalido");
                     }
                 }
-                    LivroService.getInstancia().editar(l.getIdLivro(), novoTitulo, novoAutor, novaEditora, novaCategoria, paginas, novoDono);
-            }else{
-                System.out.println("Id invalido");
-            }
 
-        }else{
-            System.out.println("Nao ha livros para serem editados");
-        }
+
+                    LivroService.getInstancia().editar(l.getIdLivro(), novoTitulo, novoAutor, novaEditora, novaCategoria, paginas, novoDono);
+
+
 
     }
 
@@ -314,7 +336,7 @@ public class LivroController {
            if(!l.isEmpty()){
                System.out.println("Todos os livros:");
                for(Livro livros : l){
-                   System.out.println(livros.getTituloDoLivro() + " - Id: " + livros.getIdLivro());
+                   System.out.println("\n" + livros.getTituloDoLivro() + "(" + livros.isDisponivel() + ")" + " - Id: " + livros.getIdLivro());
                }
            }else{
                System.out.println("Sem livros cadastrados");

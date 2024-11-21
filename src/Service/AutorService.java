@@ -70,7 +70,7 @@ public class AutorService {
             a.setNomeAutor(novoNome);
         }
         if(novaDescricao != null){
-            a.setDescriçaoAutor(novaDescricao);
+            a.setDescricaoAutor(novaDescricao);
         }
 
     }

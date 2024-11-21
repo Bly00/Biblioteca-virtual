@@ -20,6 +20,7 @@ public class Emprestimo {
         this.itensEmprestimo = itensEmprestimo;
         this.solicitante = solicitante;
     }
+    public Emprestimo(){}
 
     public Date getDataDevolucao() {
         return dataDevolucao;
@@ -48,7 +49,6 @@ public class Emprestimo {
     public List<ItemEmprestimo> getItensEmprestimo() {
         return itensEmprestimo;
     }
-
 
     public Usuario getSolicitante() {
         return solicitante;

@@ -1,14 +1,11 @@
 package Service;
 
 import Model.Emprestimo;
-import Model.ItemEmprestimo;
 import Model.Livro;
 import Model.Usuario;
 import Repository.EmprestimoRepository;
 import Repository.ItemEmprestimoRepository;
-import Repository.LivroRepository;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class EmprestimoService {
@@ -110,76 +107,144 @@ public class EmprestimoService {
 //
 //    }
 
-    public void criarEmprestimo(Usuario solicitante, List<Livro> pedidos){
+//    public void adicionar(Usuario solicitante, List<Livro> pedidos){
+//
+//        List<Livro> pegos = new ArrayList<>();
+//        int erro = 0;
+//        Scanner sc = new Scanner(System.in);
+//
+//        for(Livro l : pedidos){
+//
+//            if(LivroRepository.getInstancia().buscarPorId(l.getIdLivro()).isDisponivel()){
+//                pegos.add(LivroRepository.getInstancia().buscarPorId(l.getIdLivro()));
+//            }else{
+//                System.out.println("Livro: " + LivroRepository.getInstancia().buscarPorId(l.getIdLivro()).getTituloDoLivro() + " nao esta disponivel");
+//                erro++;
+//            }
+//
+//        }
+//
+//        Date devolucao = new Date();
+//        Calendar c = Calendar.getInstance();
+//
+//        c.setTime(devolucao);
+//        c.add(Calendar.DAY_OF_MONTH, 7);
+//
+//        devolucao = c.getTime();
+//
+//        List<ItemEmprestimo> itens = new ArrayList<>();
+//
+//        if(erro == 0){
+//
+//            for(Livro l : pegos){
+//                itens.add(ItemEmprestimoService.getInstancia().criarItemEmprestimo(l));
+//                l.setDisponivel(false);
+//            }
+//
+//            for(ItemEmprestimo i : itens){
+//                i.setDevolucaoPrevista(devolucao);
+//            }
+//
+//            EmprestimoRepository.getInstancia().salvarEmprestimo(new Emprestimo( new Date(),devolucao, itens, solicitante));
+//
+//        }else{
+//            System.out.println("Mesmo com os livros nao encontrados, deseja continuar?\n1 - Sim\n2 - Nao");
+//            int op = sc.nextInt();
+//
+//            if(op == 1){
+//
+//                for(Livro l : pegos){
+//                    itens.add(ItemEmprestimoService.getInstancia().criarItemEmprestimo(l));
+//                    l.setDisponivel(false);
+//                }
+//
+//                for(ItemEmprestimo i : itens){
+//                    i.setDevolucaoPrevista(devolucao);
+//                }
+//
+//                EmprestimoRepository.getInstancia().salvarEmprestimo(new Emprestimo( new Date(),devolucao, itens, solicitante));
+//
+//            }else if(op == 2){
+//                System.out.println("Operaçao cancelada");
+//            }else{
+//                System.out.println("Opcao invalida, operaçao cancelada");
+//            }
+//
+//        }
+//
+//    }
 
-        List<Livro> pegos = new ArrayList<>();
-        int erro = 0;
+    public void adicionar(Usuario u, List<Livro> pedidos){
+
+        if(u == null){
+            System.out.println("Usuario invalido");
+            return;
+        }
+
+        if(pedidos.isEmpty()){
+            System.out.println("Lista vazia");
+            return;
+        }
+
         Scanner sc = new Scanner(System.in);
 
+        List<Livro> livroEmprestimo = new ArrayList<>();
+        List<Livro> naoPegos = new ArrayList<>();
+        int op = 1;
+
         for(Livro l : pedidos){
-
-            if(LivroRepository.getInstancia().buscarPorId(l.getIdLivro()).isDisponivel()){
-                pegos.add(LivroRepository.getInstancia().buscarPorId(l.getIdLivro()));
+            if(l.isDisponivel()){
+                livroEmprestimo.add(l);
             }else{
-                System.out.println("Livro: " + LivroRepository.getInstancia().buscarPorId(l.getIdLivro()).getTituloDoLivro() + " nao esta disponivel");
-                erro++;
+                naoPegos.add(l);
             }
+        }
+
+        if(!naoPegos.isEmpty()){
+            System.out.println("Livros indisponiveis");
+
+            for(Livro l : naoPegos){
+                System.out.println("Nome: " + l.getTituloDoLivro());
+            }
+
+            System.out.println("Deseja continuar com o emprestimo?\n1 - Sim\n2 - Nao\n");
+
+            op = sc.nextInt();
+            sc.nextLine();
 
         }
 
-        Date devolucao = new Date();
-        Calendar c = Calendar.getInstance();
+        if(op == 1){
 
-        c.setTime(devolucao);
-        c.add(Calendar.DAY_OF_MONTH, 7);
+            Emprestimo e = new Emprestimo();
 
-        devolucao = c.getTime();
+            e.setDataEmprestimo(new Date());
 
-        List<ItemEmprestimo> itens = new ArrayList<>();
+            Calendar c = Calendar.getInstance();
+            c.setTime(e.getDataEmprestimo());
+            c.add(Calendar.DAY_OF_MONTH, 7);
 
-        if(erro == 0){
+            e.setDataDevolucao(c.getTime());
+            e.setSolicitante(u);
 
-            for(Livro l : pegos){
-                itens.add(ItemEmprestimoService.getInstancia().criarItemEmprestimo(l));
-                l.setDisponivel(false);
-            }
+            ItemEmprestimoService.getInstancia().adicionarLista(e, livroEmprestimo);
 
-            for(ItemEmprestimo i : itens){
-                i.setDevolucaoPrevista(devolucao);
-            }
-
-            EmprestimoRepository.getInstancia().salvarEmprestimo(new Emprestimo( new Date(),devolucao, itens, solicitante));
-
-        }else{
-            System.out.println("Mesmo com os livros nao encontrados, deseja continuar?\n1 - Sim\n2 - Nao");
-            int op = sc.nextInt();
-
-            if(op == 1){
-
-                for(Livro l : pegos){
-                    itens.add(ItemEmprestimoService.getInstancia().criarItemEmprestimo(l));
-                    l.setDisponivel(false);
-                }
-
-                for(ItemEmprestimo i : itens){
-                    i.setDevolucaoPrevista(devolucao);
-                }
-
-                EmprestimoRepository.getInstancia().salvarEmprestimo(new Emprestimo( new Date(),devolucao, itens, solicitante));
-
-            }else if(op == 2){
-                System.out.println("Operaçao cancelada");
-            }else{
-                System.out.println("Opcao invalida, operaçao cancelada");
-            }
+            EmprestimoRepository.getInstancia().salvarEmprestimo(e);
 
         }
+
+
 
     }
 
-    public void EncerrarEmprestimo(Integer id){
+    public void remover(Integer id){
         EmprestimoRepository.getInstancia().deletarEmprestimo(id);
     }
+
+    public Emprestimo buscarPorId(Integer id){
+        return EmprestimoRepository.getInstancia().buscaPorId(id);
+    }
+
 
 
 }

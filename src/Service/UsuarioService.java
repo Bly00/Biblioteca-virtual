@@ -20,9 +20,6 @@ public class UsuarioService {
     }
     //----------------------------------------------
 
-    public void emprestarLivro(String titulo, Autor autor, Editora editora, Categoria categoria, Integer paginas, Usuario dono){
-        LivroService.getInstancia().adicionarLivro(titulo, autor, editora, categoria, paginas, dono);
-    }
 
     public List<Usuario> listar(){
         return UsuarioRepository.getInstancia().Listar();
@@ -33,7 +30,7 @@ public class UsuarioService {
     }
 
 
-    public void cadastraUsuario(String nome, String email, String senha){
+    public void adicionar(String nome, String email, String senha){
 
         if(nome == null || email == null || senha == null){
             System.out.println("Erro: algum campo nao preenchido");
