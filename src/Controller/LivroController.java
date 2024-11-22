@@ -84,9 +84,7 @@ public class LivroController {
 
             a = AutorService.getInstancia().buscarPorId(op);
 
-            if(a == null){
-            System.out.println("Id invalido");
-            }
+
 
         }else{
             System.out.println("Nao ha autores, por favor adicione um");
@@ -110,9 +108,7 @@ public class LivroController {
 
             e = EditoraService.getInstancia().buscarPorId(op);
 
-            if(e == null){
-                System.out.println("Id invalido");
-            }
+
 
         }else{
             System.out.println("Nao ha editoras, por favor, adicione uma");
@@ -136,9 +132,6 @@ public class LivroController {
 
             c = CategoriaService.getInstancia().buscarPorId(op);
 
-            if(c == null){
-                System.out.println("Id invalido");
-            }
 
         }else{
             System.out.println("Nao ha categorias, por favor adicione uma");
@@ -165,9 +158,6 @@ public class LivroController {
 
             u = UsuarioService.getInstancia().buscarPorId(op);
 
-            if(u == null){
-                System.out.println("Id invalido");
-            }
 
         }else{
             System.out.println("Nao ha usuario, por favo adicione um usuario");

@@ -39,20 +39,7 @@ public class EmprestimoRepository {
             return emprestimos.containsKey(id);
     }
 
-    public void ListaTodosEmprestimo(){
-
-        if(emprestimos.isEmpty()){
-            System.out.println("Nao ha emprestimos registrados");
-            return;
-        }
-
-        for(Integer key : emprestimos.keySet()){
-            System.out.println(emprestimos.get(key).toString());
-        }
-
-    }
-
-    public List<Emprestimo> todosEmprestimoToList(){
+    public List<Emprestimo> getEmprestimos(){
         return new ArrayList<>(emprestimos.values());
     }
 

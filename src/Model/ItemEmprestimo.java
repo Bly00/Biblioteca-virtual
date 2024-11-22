@@ -9,10 +9,10 @@ public class ItemEmprestimo {
     private Date devolucaoPrevista;
     private boolean devolvido;
 
-    public ItemEmprestimo( boolean devolvido,  Livro livroEmprestado, Date devolucaoPrevista) {
+    public ItemEmprestimo( boolean devolvido,  Livro livroEmprestado) {
         this.devolvido = devolvido;
         this.livroEmprestado = livroEmprestado;
-        this.devolucaoPrevista = devolucaoPrevista;
+
     }
 
     public Date getDevolucaoPrevista() {

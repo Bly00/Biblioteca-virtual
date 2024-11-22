@@ -28,6 +28,14 @@ public class ItemEmprestimoRepository {
         id++;
     }
 
+    public void remover(Integer id){
+        itens.remove(id);
+    }
+
+    public ItemEmprestimo buscarPorId(Integer id){
+        return itens.get(id);
+    }
+
 
 
 }

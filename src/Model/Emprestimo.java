@@ -14,7 +14,7 @@ public class Emprestimo {
     private List<ItemEmprestimo> itensEmprestimo;
     private Usuario solicitante;
 
-    public Emprestimo(Date dataEmprestimo, Date dataDevolucao, List<ItemEmprestimo> itensEmprestimo, Usuario solicitante) {
+    public Emprestimo(Date dataEmprestimo, List<ItemEmprestimo> itensEmprestimo, Usuario solicitante) {
         this.dataDevolucao = dataDevolucao;
         this.dataEmprestimo = dataEmprestimo;
         this.itensEmprestimo = itensEmprestimo;

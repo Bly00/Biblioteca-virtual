@@ -15,7 +15,7 @@ public class Main {
         while(true){
 
             System.out.println("\tMENU");
-            System.out.println("1 - Livro\n2 - Autor\n3 - Editora\n4 - Categoria\n5 - Usuario");
+            System.out.println("1 - Livro\n2 - Autor\n3 - Editora\n4 - Categoria\n5 - Usuario\n6 - Emprestimo");
 
             int op = sc.nextInt();
             sc.nextLine();
@@ -27,6 +27,7 @@ public class Main {
                 case 3 -> EditoraController.getInstancia().iniciar();
                 case 4 -> CategoriaController.getInstancia().iniciar();
                 case 5 -> UsuarioController.getInstance().iniciar();
+                case 6 -> EmprestimoController.getInstance().iniciar();
                 case 0 -> {return;}
 
             }
