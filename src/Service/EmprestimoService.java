@@ -6,6 +6,7 @@ import Model.Livro;
 import Model.Usuario;
 import Repository.EmprestimoRepository;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class EmprestimoService {
@@ -25,20 +26,19 @@ public class EmprestimoService {
 //
     public void adicionar(Emprestimo novoEmprestimo){
 
-        Date d = new Date();
-        Calendar c = Calendar.getInstance();
+        List<ItemEmprestimo> livrosPegos = new ArrayList<>();
 
-        c.setTime(d);
-        c.add(Calendar.DAY_OF_MONTH, 7);
-
-        d = c.getTime();
-
-        novoEmprestimo.setDataDevolucao(d);
 
         for(ItemEmprestimo i : novoEmprestimo.getItensEmprestimo()){
-            i.getLivroEmprestado().setDisponivel(false);
-            i.setDevolucaoPrevista(d);
+
+            i.setEmprestimoMae(novoEmprestimo);
+
+            livrosPegos.add(ItemEmprestimoService.getInstancia().adicionar(i.getLivroEmprestado()));
+
+            i.setDevolucaoPrevista(novoEmprestimo.getDataDevolucao());
         }
+
+        novoEmprestimo.setItensEmprestimo(livrosPegos);
 
         EmprestimoRepository.getInstancia().salvarEmprestimo(novoEmprestimo);
 
@@ -61,6 +61,32 @@ public class EmprestimoService {
 
     public List<Emprestimo> getEmprestimo(){
         return EmprestimoRepository.getInstancia().getEmprestimos();
+    }
+
+    public void editar(Integer id, LocalDate devolucao, List<Integer> i, Usuario u){
+
+        Emprestimo e = EmprestimoService.getInstancia().buscarPorId(id);
+
+        if(devolucao != null){
+            e.setDataDevolucao(devolucao);
+        }
+
+        if(!i.isEmpty()){
+
+            for(Integer ids : i){
+
+                e.getItensEmprestimo().remove(ItemEmprestimoService.getInstancia().buscaPorId(ids));
+
+                ItemEmprestimoService.getInstancia().remover(ids);
+
+            }
+
+        }
+
+        if(u != null){
+            e.setSolicitante(u);
+        }
+
     }
 
 }

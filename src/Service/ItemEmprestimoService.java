@@ -26,10 +26,15 @@ public class ItemEmprestimoService {
     //-----------------------------------------
 
     public ItemEmprestimo adicionar(Livro livroPego){
+
         ItemEmprestimo novoItem = new ItemEmprestimo(false, livroPego);
+
         ItemEmprestimoRepository.getInstancia().salvarItem(novoItem);
+
         return novoItem;
+
     }
+
     public void remover(Integer id){
 
         ItemEmprestimoRepository.getInstancia().buscarPorId(id).getLivroEmprestado().setDisponivel(true);
@@ -38,6 +43,9 @@ public class ItemEmprestimoService {
 
     }
 
+    public ItemEmprestimo buscaPorId(Integer id){
+        return ItemEmprestimoRepository.getInstancia().buscarPorId(id);
+    }
 
 
 }

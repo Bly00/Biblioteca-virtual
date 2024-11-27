@@ -1,12 +1,14 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ItemEmprestimo {
 
     private int idItem;
     private Livro livroEmprestado;
-    private Date devolucaoPrevista;
+    private LocalDate devolucaoPrevista;
+    private Emprestimo emprestimoMae;
     private boolean devolvido;
 
     public ItemEmprestimo( boolean devolvido,  Livro livroEmprestado) {
@@ -15,11 +17,19 @@ public class ItemEmprestimo {
 
     }
 
-    public Date getDevolucaoPrevista() {
+    public Emprestimo getEmprestimoMae(){
+        return this.emprestimoMae;
+    }
+
+    public void setEmprestimoMae(Emprestimo e){
+        this.emprestimoMae = e;
+    }
+
+    public LocalDate getDevolucaoPrevista() {
         return devolucaoPrevista;
     }
 
-    public void setDevolucaoPrevista(Date devolucaoPrevista) {
+    public void setDevolucaoPrevista(LocalDate devolucaoPrevista) {
         this.devolucaoPrevista = devolucaoPrevista;
     }
 
@@ -51,12 +61,13 @@ public class ItemEmprestimo {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Id: " + idItem + " - Livro: " + livroEmprestado.getTituloDoLivro());
+        sb.append("Id: " + idItem + " - Livro: " + livroEmprestado.getTituloDoLivro() + "\n");
 
         return sb.toString();
     }
 
-//    public void atualizarStatus(){
+
+    //    public void atualizarStatus(){
 //        //quando o prazo finalizar, o item poderar ter ser statu modificado
 //    }
 }
