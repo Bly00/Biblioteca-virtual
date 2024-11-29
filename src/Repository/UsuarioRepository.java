@@ -51,7 +51,7 @@ public class UsuarioRepository{
         return usuarios.get(id);
     }
 
-    public List<Usuario> Listar(){
+    public List<Usuario> getUsuairos(){
         return new ArrayList<>(usuarios.values());
     }
 

@@ -21,8 +21,8 @@ public class UsuarioService {
     //----------------------------------------------
 
 
-    public List<Usuario> listar(){
-        return UsuarioRepository.getInstancia().Listar();
+    public List<Usuario> getUsuarios(){
+        return UsuarioRepository.getInstancia().getUsuairos();
     }
 
     public Usuario buscarPorId(Integer id){

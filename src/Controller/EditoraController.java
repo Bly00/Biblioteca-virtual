@@ -54,16 +54,18 @@ public class EditoraController {
 
     public void listar(){
 
-        List<Editora> e = EditoraService.getInstancia().listar();
+        List<Editora> e = EditoraService.getInstancia().getEditoras();
 
         if(e != null) {
-            System.out.println("Todas as editoras:");
+            System.out.println("\nTodas as editoras:\n");
             for(Editora editora : e){
                 System.out.println(editora.getNomeEditora() + " - Id: " + editora.getIdEditora());
             }
         }else{
             System.out.println("Nao ha editoras cadastradas");
         }
+
+        System.out.println();
 
     }
 
@@ -101,7 +103,7 @@ public class EditoraController {
         String novaDescricao = null;
         int op = 0;
 
-        if(!EditoraService.getInstancia().listar().isEmpty()){
+        if(!EditoraService.getInstancia().getEditoras().isEmpty()){
 
             System.out.print("Id da editora que sera editada: ");
 

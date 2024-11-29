@@ -38,12 +38,8 @@ public class CategoriaService {
         CategoriaService.getInstancia().remover(id);
     }
 
-    public List<Categoria> listar(){
-        if(!CategoriaRepository.getInstancia().ListaCategorias().isEmpty()){
-            return CategoriaRepository.getInstancia().ListaCategorias();
-        }else{
-            return null;
-        }
+    public List<Categoria> getCategorias(){
+        return CategoriaRepository.getInstancia().getCategorias();
     }
 
     public Categoria buscarPorId(Integer id){

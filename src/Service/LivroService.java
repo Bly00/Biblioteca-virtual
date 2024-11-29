@@ -22,35 +22,6 @@ public class LivroService {
 
     public void adicionarLivro(Livro l){
 
-        if(l.getTituloDoLivro() == null){
-            System.out.println("Erro: Titulo nao informado");
-            return;
-        }
-        if(l.getAutor() == null || !AutorRepository.getInstancia().existe(l.getAutor().getIdAutor())){
-            System.out.println("Erro: Autor nao existe ou nao resgistrada");
-            return;
-        }
-
-        if(l.getEditora() == null || !EditoraRepository.getInstancia().existe(l.getEditora().getIdEditora())){
-            System.out.println("Erro: Editora nao existe ou nao resgistrada");
-            return;
-        }
-
-        if(l.getCategoria() == null || !CategoriaRepository.getInstancia().existe(l.getCategoria().getIdCategoria())){
-            System.out.println("Erro: Categoria nao existe ou nao resgistrada");
-            return;
-        }
-        if(l.getDono() == null || !UsuarioRepository.getInstancia().existe(l.getDono().getIdUsuario())){
-            System.out.println("Erro: Dono nao existe ou nao registrado");
-            return;
-        }
-        if(l.getPaginas() == 0){
-            System.out.println("Erro: Paginas nao informadas");
-            return;
-        }
-
-
-
         LivroRepository.getInstancia().salvarLivro(l);
 
         System.out.println("Livro cadastrado com sucesso\n");

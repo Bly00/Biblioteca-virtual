@@ -84,7 +84,7 @@ public class UsuarioController {
 
     public void editar(){
 
-        if(UsuarioService.getInstancia().listar().isEmpty()){
+        if(UsuarioService.getInstancia().getUsuarios().isEmpty()){
             System.out.println("Nao ha usuarios cadastrados");
             return;
         }
@@ -140,16 +140,17 @@ public class UsuarioController {
     }
 
     public void listar(){
-        List<Usuario> u = UsuarioService.getInstancia().listar();
+        List<Usuario> u = UsuarioService.getInstancia().getUsuarios();
 
         if(u != null){
-            System.out.println("Todos os usuarios");
+            System.out.println("\nTodos os usuarios\n");
             for(Usuario usuario : u){
                 System.out.println(usuario.getNome() + " - Id: " + usuario.getIdUsuario());
             }
         }else{
             System.out.println("Nao ha usuarios cadastrados");
         }
+        System.out.println();
     }
 
     public void buscarPorId(){

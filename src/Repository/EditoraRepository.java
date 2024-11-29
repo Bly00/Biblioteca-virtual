@@ -43,7 +43,7 @@ public class EditoraRepository {
         return editoras.containsKey(id);
     }
 
-    public List<Editora> listaEditora(){
+    public List<Editora> getEditoras(){
         return new ArrayList<>(editoras.values());
     }
 

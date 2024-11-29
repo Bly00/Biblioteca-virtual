@@ -11,10 +11,11 @@ public class Livro {
     private Editora editora;
     private Categoria categoria;
     private int paginas;
+    private String descricao;
     private boolean disponivel;
     private Usuario dono;
 
-    public Livro(String tituloDoLivro, Autor autor,  Editora editora, Categoria categoria, int paginas, Usuario dono) {
+    public Livro(String tituloDoLivro, String descricao, Autor autor,  Editora editora, Categoria categoria, int paginas, Usuario dono) {
         this.autor = autor;
         this.categoria = categoria;
         this.disponivel = true;
@@ -22,6 +23,7 @@ public class Livro {
         this.editora = editora;
         this.paginas = paginas;
         this.tituloDoLivro = tituloDoLivro;
+        this.descricao = descricao;
     }
 
     public Livro(){}
@@ -90,6 +92,14 @@ public class Livro {
         this.tituloDoLivro = tituloDoLivro;
     }
 
+    public String getDescricao(){
+        return descricao;
+    }
+
+    public void setDescricao(String descricao){
+        this.descricao = descricao;
+    }
+
     public void editarLivro(){
         //edita as informaçoes antes passado na instanciaçao de um livro
     }
@@ -99,7 +109,8 @@ public class Livro {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Titulo: " + tituloDoLivro);
-        sb.append("\nAutor: " + autor.getNomeAutor() + " - Editora: " + editora.getNomeEditora() + " - Categoria: " + categoria.getNomeCategoria());
+        sb.append("\n\nDescrição: " + getDescricao());
+        sb.append("\n\nAutor: " + autor.getNomeAutor() + " - Editora: " + editora.getNomeEditora() + " - Categoria: " + categoria.getNomeCategoria());
         sb.append("\nPaginas: " + paginas);
         sb.append("\nQuem emprestou: " + dono.getNome() + "\n");
         if(disponivel){

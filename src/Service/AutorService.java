@@ -3,6 +3,7 @@ package Service;
 import Model.Autor;
 import Repository.AutorRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AutorService {
@@ -51,11 +52,7 @@ public class AutorService {
     }
 
     public List<Autor> getAutores(){
-        if(!AutorRepository.getInstancia().getAutores().isEmpty()){
-            return AutorRepository.getInstancia().getAutores();
-        } else{
-            return null;
-        }
+        return AutorRepository.getInstancia().getAutores();
     }
 
     public Autor buscarPorId(Integer id){

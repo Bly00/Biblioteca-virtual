@@ -17,8 +17,10 @@ public class Main {
             System.out.println("\tMENU");
             System.out.println("1 - Livro\n2 - Autor\n3 - Editora\n4 - Categoria\n5 - Usuario\n6 - Emprestimo");
 
-            int op = sc.nextInt();
-            sc.nextLine();
+
+            try{
+
+                int op = Integer.parseInt(sc.nextLine());
 
             switch (op){
 
@@ -29,10 +31,22 @@ public class Main {
                 case 5 -> UsuarioController.getInstance().iniciar();
                 case 6 -> EmprestimoController.getInstance().iniciar();
                 case 0 -> {return;}
+                default -> {
+                    System.out.println("Opçao invalida");
+                }
 
             }
 
+            }catch (Exception e){
+                System.out.println("Opçao invalida");
+            }
+
         }
+
+
+
+
+
 
 
 

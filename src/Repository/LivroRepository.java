@@ -28,7 +28,7 @@ public class LivroRepository {
     public void salvarLivro(Livro novoLivro){
 
         novoLivro.setIdLivro(idLivro);
-        livros.put(idLivro, novoLivro);
+        livros.put(novoLivro.getIdLivro(), novoLivro);
 
         idLivro++;
     }

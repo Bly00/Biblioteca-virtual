@@ -150,13 +150,14 @@ public class AutorController {
         List<Autor> a = AutorService.getInstancia().getAutores();
 
         if(a != null){
-            System.out.println("Todos os autores: ");
+            System.out.println("Todos os autores: \n");
             for(Autor autor : a){
                 System.out.println(autor.getNomeAutor() + " - Id: " + autor.getIdAutor());
             }
         }else{
             System.out.println("Sem autores cadastrados");
         }
+        System.out.println();
     }
 
 

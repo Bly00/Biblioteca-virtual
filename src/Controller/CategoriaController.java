@@ -88,7 +88,7 @@ public class CategoriaController {
         String novaDescricao = null;
         int op = 0;
 
-        if(!CategoriaService.getInstancia().listar().isEmpty()){
+        if(!CategoriaService.getInstancia().getCategorias().isEmpty()){
 
             System.out.print("Id da categoria que sera editada: ");
 
@@ -147,16 +147,17 @@ public class CategoriaController {
 
     public void listar(){
 
-        List<Categoria> c = CategoriaService.getInstancia().listar();
+        List<Categoria> c = CategoriaService.getInstancia().getCategorias();
 
         if(c != null){
-            System.out.println("Todas as categorias:");
+            System.out.println("\nTodas as categorias:\n");
             for(Categoria categoria : c){
                 System.out.println(categoria.getNomeCategoria() + " - Id: " + categoria.getIdCategoria());
             }
         }else{
             System.out.println("Nao ha categorias cadastradas");
         }
+        System.out.println();
     }
 
 }

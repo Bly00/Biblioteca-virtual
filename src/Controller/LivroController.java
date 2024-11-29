@@ -58,7 +58,25 @@ public class LivroController {
 
     public void adicionar(){
 
+           if(AutorService.getInstancia().getAutores().isEmpty()){
+               System.out.println("Por favor, cadastre um autor");
+               return;
+           }
+           if(EditoraService.getInstancia().getEditoras().isEmpty()){
+               System.out.println("Por favor, cadastre uma editora");
+               return;
+           }
+           if(CategoriaService.getInstancia().getCategorias().isEmpty()){
+               System.out.println("Por favor, cadastre uma categoria");
+               return;
+           }
+           if(UsuarioService.getInstancia().getUsuarios().isEmpty()){
+               System.out.println("Por favor, faça login");
+               return;
+           }
+
            int op;
+           String descricao;
            Autor a;
            Editora e;
            Categoria c;
@@ -67,118 +85,195 @@ public class LivroController {
         System.out.print("Titulo: ");
         String titulo = sc.nextLine();
 
-        if(AutorService.getInstancia().getAutores() != null){
+        System.out.println();
 
-            System.out.println("Escolha o id do autor:\n\n0 - Sair\n");
+        System.out.print("Descrição: ");
+        descricao = sc.nextLine();
 
-            AutorController.getInstancia().listar();
+        System.out.println();
 
-            System.out.println("\nCaso nao haja o desejado, saia e o adicione\n");
+        while(true){
 
-            op = sc.nextInt();
-            sc.nextLine();
+                AutorController.getInstancia().listar();
 
-            if(op == 0){
-                return;
+                System.out.print("0 - Para \t ID: ");
+
+                try{
+
+                op = Integer.parseInt(sc.nextLine());
+
+                if(op == 0){
+                    return;
+                }
+
+                if(AutorService.getInstancia().buscarPorId(op) != null){
+                    a = AutorService.getInstancia().buscarPorId(op);
+                    break;
+                }else{
+                    System.out.println("Autor invalido");
+                }
+
+            }catch(Exception exception){
+                    System.out.println("Opçao invalida,  tente novamente");
+                }
+
+
             }
 
-            a = AutorService.getInstancia().buscarPorId(op);
 
 
 
-        }else{
-            System.out.println("Nao ha autores, por favor adicione um");
-            return;
-        }
 
-        if(EditoraService.getInstancia().listar() != null){
 
-            System.out.println("Escolha o id da editora:\n\n0 - Sair\n");
 
-            EditoraController.getInstancia().listar();
+            while(true){
 
-            System.out.println("\nCaso nao haja o desejado, saia e o adicione\n");
+                EditoraController.getInstancia().listar();
 
-            op = sc.nextInt();
-            sc.nextLine();
+                System.out.print("0 - Para \t ID: ");
 
-            if(op == 0){
-                return;
+                try{
+
+                    op = Integer.parseInt(sc.nextLine());
+
+                    if(op == 0){
+                        return;
+                    }
+
+                    if(EditoraService.getInstancia().buscarPorId(op) != null){
+                        e = EditoraService.getInstancia().buscarPorId(op);
+                        break;
+                    }else{
+                        System.out.println("Editora invalida");
+                    }
+
+                }catch(Exception exception){
+                    System.out.println("Opçao invalida, tente novamente");
+                }
+
             }
 
-            e = EditoraService.getInstancia().buscarPorId(op);
 
 
 
-        }else{
-            System.out.println("Nao ha editoras, por favor, adicione uma");
-            return;
-        }
 
-        if(CategoriaService.getInstancia().listar() != null){
 
-            System.out.println("Escolha o id da categoria:\n\n0 - Sair\n");
+            while(true){
 
-            CategoriaController.getInstancia().listar();
+                CategoriaController.getInstancia().listar();
 
-            System.out.println("\nCaso nao haja o desejado, saia e o adicione\n");
+                System.out.print("0 - Para \t ID: ");
 
-            op = sc.nextInt();
-            sc.nextLine();
+                try{
 
-            if(op == 0){
-                return;
+                    op = Integer.parseInt(sc.nextLine());
+
+                    if(op == 0){
+                        return;
+                    }
+
+                    if(CategoriaService.getInstancia().buscarPorId(op) != null){
+                        c = CategoriaService.getInstancia().buscarPorId(op);
+                        break;
+                    }else{
+                        System.out.println("Categoria invalida");
+                    }
+
+                }catch(Exception exception){
+                    System.out.println("Opçao onvalida");
+                }
+
             }
 
-            c = CategoriaService.getInstancia().buscarPorId(op);
 
 
-        }else{
-            System.out.println("Nao ha categorias, por favor adicione uma");
-            return;
-        }
+        int paginas;
 
-        System.out.println("Paginas: ");
-        int paginas = sc.nextInt();
+        while(true){
 
-        if(UsuarioService.getInstancia().listar() != null){
+            System.out.print("Quantidade de paginas: ");
 
-            System.out.println("Escolha o id do usuario:\n\n0 - Sair\n");
+            try{
 
-            UsuarioController.getInstance().listar();
+                paginas = Integer.parseInt(sc.nextLine());
 
-            System.out.println("\nCaso nao haja o desejado, saia e o adicione\n");
+                break;
 
-            op = sc.nextInt();
-            sc.nextLine();
-
-            if(op == 0){
-                return;
+            }catch (Exception exception){
+                System.out.println("Por favar, entre com um numero inteiro");
             }
 
-            u = UsuarioService.getInstancia().buscarPorId(op);
-
-
-        }else{
-            System.out.println("Nao ha usuario, por favo adicione um usuario");
         }
 
-        Livro livro = new Livro(titulo, a, e, c, paginas, u);
+
+            while(true){
+
+                UsuarioController.getInstance().listar();
+
+                System.out.print("0 - Para \t ID: ");
+
+                try{
+
+                    op = Integer.parseInt(sc.nextLine());
+
+                    if(op == 0){
+                        return;
+                    }
+
+                if(UsuarioService.getInstancia().buscarPorId(op) != null){
+                    u = UsuarioService.getInstancia().buscarPorId(op);
+                    break;
+                }else{
+                    System.out.println("Usuario invalido");
+                }
+
+                }catch(Exception exception){
+                    System.out.println("Opçao invalida");
+                }
+
+            }
+
+
+        Livro livro = new Livro(titulo, descricao, a, e, c, paginas, u);
 
         LivroService.getInstancia().adicionarLivro(livro);
+
         }
 
     public void remover(){
-        System.out.println("Digite id: ");
 
-        Livro l = LivroService.getInstancia().buscarPorId(sc.nextInt());
+           if(LivroService.getInstancia().getLivros().isEmpty()){
+               System.out.println("Sem livros");
+               return;
+           }
 
-        if(l != null){
+           while(true){
+
+        System.out.print("0 - Sair \t Digite id: ");
+
+        try{
+
+            int op = Integer.parseInt(sc.nextLine());
+
+            if(op == 0){
+                return;
+            }
+
+        Livro l = LivroService.getInstancia().buscarPorId(op);
+
+            if(l != null){
             System.out.println("Livro: " + l.getTituloDoLivro() + " removido");
             LivroService.getInstancia().remover(l.getIdLivro());
+            break;
         }else{
             System.out.println("Livro nao encontrado");
         }
+
+        }catch(Exception e){
+            System.out.println("Opção invalida");
+        }
+
+           }
 
     }
 
@@ -335,14 +430,32 @@ public class LivroController {
 
     public void buscarPorId(){
 
-        System.out.print("Digite o id: ");
+           if(LivroService.getInstancia().getLivros().isEmpty()){
+               System.out.println("Sem livros");
+               return;
+           }
 
-        Livro l = LivroService.getInstancia().buscarPorId(sc.nextInt());
+           while(true){
+
+            System.out.print("Digite o id: ");
+
+            try{
+
+            int op = Integer.parseInt(sc.nextLine());
+
+        Livro l = LivroService.getInstancia().buscarPorId(op);
 
         if(l != null){
             System.out.println(l);
+            break;
         }else{
             System.out.println("Livro nao encontrado");
+        }
+
+            }catch(Exception e){
+                System.out.println("Opçao invalida");
+            }
+
         }
 
     }

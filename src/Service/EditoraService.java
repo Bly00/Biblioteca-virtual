@@ -35,12 +35,8 @@ public class EditoraService {
 
     }
 
-    public List<Editora> listar(){
-        if(EditoraRepository.getInstancia().listaEditora() != null){
-            return EditoraRepository.getInstancia().listaEditora();
-        }else{
-            return null;
-        }
+    public List<Editora> getEditoras(){
+        return EditoraRepository.getInstancia().getEditoras();
     }
 
     public Editora buscarPorId(Integer id){
