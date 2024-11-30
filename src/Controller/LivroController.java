@@ -50,6 +50,9 @@ public class LivroController {
                     case 0 -> {
                         return;
                     }
+                    default -> {
+                        System.out.println("Opçao invalida");
+                    }
                 }
 
         }

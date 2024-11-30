@@ -1,7 +1,9 @@
 package Controller;
 
 import Model.Editora;
+import Service.AutorService;
 import Service.EditoraService;
+import Service.EmprestimoService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -33,20 +35,31 @@ public class EditoraController {
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
-            int op = sc.nextInt();
-            sc.nextLine();
+            try{
 
-            switch(op){
+                int op = Integer.parseInt(sc.nextLine());
 
-                case 1 -> adicionar();
-                case 2 -> listar();
-                case 3 -> buscarPorId();
-                case 4 -> remover();
-                case 5 -> editar();
-                case 0 -> {
-                    return;
+
+                switch(op){
+
+                    case 1 -> adicionar();
+                    case 2 -> listar();
+                    case 3 -> buscarPorId();
+                    case 4 -> remover();
+                    case 5 -> editar();
+                    case 0 -> {
+                        return;
+                    }
+                    default -> {
+                        System.out.println("Opçao invalida");
+                    }
                 }
+
+            }catch(Exception e){
+                System.out.println("Opçao invalida");
             }
+
+
 
         }
 
@@ -85,15 +98,34 @@ public class EditoraController {
 
     public void remover(){
 
-        System.out.print("Id da editora que sera removida: ");
-       Editora e = EditoraService.getInstancia().buscarPorId(sc.nextInt());
+        while(true){
 
-       if(e != null){
-           System.out.println("Editora: " + e.getNomeEditora() + " removida");
-           EditoraService.getInstancia().remover(e.getIdEditora());
-       }else{
-           System.out.println("Editora nao encontrada");
-       }
+
+            try{
+
+                System.out.print("0 - Sair \t Id da editora a ser removida: ");
+                int op = Integer.parseInt(sc.nextLine());
+
+                if(op == 0){
+                    return;
+                }
+
+                if(EditoraService.getInstancia().buscarPorId(op) != null){
+
+                    EditoraService.getInstancia().remover(op);
+                    System.out.println("Editora removida");
+                    return;
+
+                }else{
+                    System.out.println("Id invalido");
+                }
+
+            }catch(Exception e){
+                System.out.println("Opçao invalida");
+            }
+
+
+        }
 
     }
 

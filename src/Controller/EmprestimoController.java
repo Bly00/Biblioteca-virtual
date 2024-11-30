@@ -41,20 +41,35 @@ public class EmprestimoController {
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
-            int op = sc.nextInt();
-            sc.nextLine();
+            try{
 
-            switch(op){
+                int op = Integer.parseInt(sc.nextLine());
 
-                case 1 -> adicionar();
-                case 2 -> listar();
-                case 3 -> buscarPorId();
-                case 4 -> remover();
-                case 5 -> editar();
-                case 0 -> {
-                    return;
+                switch(op){
+
+
+
+                    case 1 -> adicionar();
+                    case 2 -> listar();
+                    case 3 -> buscarPorId();
+                    case 4 -> remover();
+                    case 5 -> editar();
+                    case 0 -> {
+                        return;
+                    }
+                    default -> {
+                        System.out.println("Opçao invalida");
+                    }
                 }
+
             }
+            catch(Exception e){
+
+                System.out.println("Opçao invalida");
+
+            }
+
+
 
         }
 
@@ -193,17 +208,36 @@ public class EmprestimoController {
 
     public void remover(){
 
-    System.out.println("Digite o id: ");
-    var e = EmprestimoService.getInstancia().buscarPorId(sc.nextInt());
 
-    if(e == null){
-        System.out.println("Id invalido");
-        return;
-    }
+        while(true){
 
-    System.out.println("Emprestimo removido");
+            System.out.print("0 - Sair \t ID do emprestimo: ");
 
-    EmprestimoService.getInstancia().remover(e.getIdEmprestimo());
+            try{
+
+                int op = Integer.parseInt(sc.nextLine());
+
+                if(op == 0){
+                    return;
+                }
+
+                if(EmprestimoService.getInstancia().buscarPorId(op) != null){
+
+                    EmprestimoService.getInstancia().remover(op);
+
+                    System.out.println("Emprestimo removido");
+
+                    return;
+
+                }else{
+                    System.out.println("Opçao invalida");
+                }
+
+            }catch(Exception e){
+                System.out.println("Opçao invalida");
+            }
+
+        }
 
     }
 
@@ -221,7 +255,7 @@ public class EmprestimoController {
 
         String devolucao = formatter.format(e.getDataDevolucao());
 
-        List<Integer> ids = new ArrayList<>();
+        List<ItemEmprestimo> itensRemovidos = e.getItensEmprestimo();
         LocalDate novaDevolucao = null;
         Usuario novoSolicitante = null;
 
@@ -312,63 +346,7 @@ public class EmprestimoController {
                 novaDevolucao = LocalDate.of(LocalDate.now().getYear(), mes, dia);
         }
 
-        System.out.println("Deseja remover algum item?\n1 - Sim\n2 - Nao");
-        op = sc.nextInt();
-        sc.nextLine();
-
-
-        if(op == 1){
-
-            while(true){
-
-//
-            boolean contemAll = true;
-
-            for(ItemEmprestimo i : e.getItensEmprestimo()){
-
-                if(!ids.contains(i.getIdItem())){
-                    contemAll = false;
-                    break;
-                }
-
-            }
-
-            if(contemAll){
-                EmprestimoService.getInstancia().remover(e.getIdEmprestimo());
-                return;
-            }
-
-
-            System.out.println("Livros do emprestimo:");
-
-            for(ItemEmprestimo l : e.getItensEmprestimo()){
-
-                if(!ids.contains(l.getIdItem())){
-                System.out.println("ID: " + l.getIdItem() + " - Livro: " + l.getLivroEmprestado().getTituloDoLivro());
-                }
-
-            }
-
-
-            System.out.println("0 - Finalizar\tId do livro: ");
-            op = sc.nextInt();
-            sc.nextLine();
-
-            if(op == 0){
-                break;
-            }
-
-            ItemEmprestimo i = ItemEmprestimoService.getInstancia().buscaPorId(op);
-
-            if(i != null && !ids.contains(i.getIdItem())){
-                ids.add(i.getIdItem());
-            }else{
-                System.out.println("Item invalido");
-            }
-
-        }
-
-        }
+        //Implemetar logica de remover itens
 
         System.out.println("Mudar solicitante?\n1 - Sim\n2 - Nao");
         op = sc.nextInt();
@@ -405,7 +383,7 @@ public class EmprestimoController {
 
 
 
-            EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), novaDevolucao, ids, novoSolicitante);
+            EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), novaDevolucao, itensRemovidos, novoSolicitante);
 
         }
 

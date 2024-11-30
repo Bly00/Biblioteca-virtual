@@ -46,13 +46,27 @@ public class EmprestimoService {
 
     public void remover(Integer id){
 
-        List<ItemEmprestimo> i = EmprestimoRepository.getInstancia().buscaPorId(id).getItensEmprestimo();
+      Emprestimo e = EmprestimoService.getInstancia().buscarPorId(id);
 
-        for(ItemEmprestimo itens : i){
-            ItemEmprestimoService.getInstancia().remover(itens.getIdItem());
-        }
+      if(e == null){
+          System.out.println("Id invalido");
+          return;
+      }
 
-        EmprestimoRepository.getInstancia().deletarEmprestimo(id);
+      List<ItemEmprestimo> i = e.getItensEmprestimo();
+
+      for(ItemEmprestimo item : i){
+
+          LivroService.getInstancia().buscarPorId(item.getLivroEmprestado().getIdLivro()).setDisponivel(true);
+
+          ItemEmprestimoService.getInstancia().remover(item.getIdItem());
+
+      }
+
+      e.getItensEmprestimo().clear();
+
+      EmprestimoRepository.getInstancia().deletarEmprestimo(e.getIdEmprestimo());
+
     }
 
     public Emprestimo buscarPorId(Integer id){
@@ -63,24 +77,12 @@ public class EmprestimoService {
         return EmprestimoRepository.getInstancia().getEmprestimos();
     }
 
-    public void editar(Integer id, LocalDate devolucao, List<Integer> i, Usuario u){
+    public void editar(Integer id, LocalDate devolucao, List<ItemEmprestimo> disponibilizar, Usuario u){
 
         Emprestimo e = EmprestimoService.getInstancia().buscarPorId(id);
 
         if(devolucao != null){
             e.setDataDevolucao(devolucao);
-        }
-
-        if(!i.isEmpty()){
-
-            for(Integer ids : i){
-
-                e.getItensEmprestimo().remove(ItemEmprestimoService.getInstancia().buscaPorId(ids));
-
-                ItemEmprestimoService.getInstancia().remover(ids);
-
-            }
-
         }
 
         if(u != null){

@@ -33,20 +33,28 @@ public class AutorController {
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
-            int op = sc.nextInt();
-            sc.nextLine();
+            try{
+                int op = Integer.parseInt(sc.nextLine());
 
-            switch(op){
+                switch(op){
 
-                case 1 -> adicionar();
-                case 2 -> listar();
-                case 3 -> buscarPorId();
-                case 4 -> remover();
-                case 5 -> editar();
-                case 0 -> {
-                    return;
+                    case 1 -> adicionar();
+                    case 2 -> listar();
+                    case 3 -> buscarPorId();
+                    case 4 -> remover();
+                    case 5 -> editar();
+                    case 0 -> {
+                        return;
+                    }
+                    default -> {
+                        System.out.println("Opçao invalida");
+                    }
                 }
+            }catch(Exception e){
+                System.out.println("Opçao invalida");
             }
+
+
 
         }
 
@@ -68,15 +76,32 @@ public class AutorController {
 
     public void remover(){
 
-        System.out.print("Id do autor que sera removida: ");
-        Autor a = AutorService.getInstancia().buscarPorId(sc.nextInt());
+       while(true){
 
-        if(a != null){
-            System.out.println("Autor: " + a.getNomeAutor() + " removida");
-            AutorService.getInstancia().removerAutor(a.getIdAutor());
-        }else{
-            System.out.println("Autor nao encontrada");
-        }
+
+           try{
+
+               System.out.print("0 - Sair \t Id do autor a ser removido: ");
+               int op = Integer.parseInt(sc.nextLine());
+
+               if(op == 0){
+                   return;
+               }
+
+               if(AutorService.getInstancia().buscarPorId(op) != null){
+                   AutorService.getInstancia().removerAutor(op);
+                   System.out.println("Autor removido");
+                   return;
+               }else{
+                   System.out.println("Id invalido");
+               }
+
+           }catch(Exception e){
+               System.out.println("Opçao invalida");
+           }
+
+
+       }
 
     }
 

@@ -33,20 +33,32 @@ public class UsuarioController {
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
 
-            int op = sc.nextInt();
-            sc.nextLine();
+            try{
 
-            switch(op){
+                int op = Integer.parseInt(sc.nextLine());
 
-                case 1 -> adicionar();
-                case 2 -> listar();
-                case 3 -> buscarPorId();
-                case 4 -> remover();
-                case 5 -> editar();
-                case 0 -> {
-                    return;
+                switch(op){
+
+                    case 1 -> adicionar();
+                    case 2 -> listar();
+                    case 3 -> buscarPorId();
+                    case 4 -> remover();
+                    case 5 -> editar();
+                    case 0 -> {
+                        return;
+                    }
+                    default -> {
+                        System.out.println("Opçao invalida");
+                    }
                 }
+
+            }catch(Exception e){
+                System.out.println("Opçao invalida");
             }
+
+
+
+
 
         }
 
@@ -71,15 +83,39 @@ public class UsuarioController {
     }
 
     public void remover(){
-        System.out.print("Id do usuario que sera removido: ");
-        Usuario u = UsuarioService.getInstancia().buscarPorId(sc.nextInt());
 
-        if(u != null){
-            System.out.println("Usuario: " + u.getNome() + " removido(a)");
-            UsuarioService.getInstancia().remover(u.getIdUsuario());
-        }else{
-            System.out.println("Usuario nao encontrado");
+        if(UsuarioService.getInstancia().getUsuarios().isEmpty()){
+            System.out.println("Sem usuarios");
+            return;
         }
+
+        while(true){
+
+            try{
+
+                System.out.print("0 - Sair \t Id do usuario a ser removido");
+                int op = Integer.parseInt(sc.nextLine());
+
+                if(op == 0){
+                    return;
+                }
+
+                if(UsuarioService.getInstancia().buscarPorId(op) != null){
+                    UsuarioService.getInstancia().remover(op);
+                    System.out.println("Usuario removido");
+                    return;
+                }else{
+                    System.out.println("Id invalido");
+                }
+
+            }catch(Exception e){
+                System.out.println("Opçao invalida");
+            }
+
+
+        }
+
+
     }
 
     public void editar(){
@@ -154,13 +190,29 @@ public class UsuarioController {
     }
 
     public void buscarPorId(){
-        System.out.print("Id: ");
-        Usuario u = UsuarioService.getInstancia().buscarPorId(sc.nextInt());
 
-        if(u != null) {
-            System.out.println(u);
-        } else {
-            System.out.println("Usuario nao encontrado");
+        while(true) {
+
+            try{
+
+            System.out.print("0 - Sair \t Id do usuario: ");
+            int op = Integer.parseInt(sc.nextLine());
+
+            if(op == 0){
+                return;
+            }
+
+            if (UsuarioService.getInstancia().buscarPorId(op) != null) {
+                System.out.println(UsuarioService.getInstancia().buscarPorId(op));
+                return;
+            } else {
+                System.out.println("Id invalido");
+            }
+
+        }catch(Exception e){
+                System.out.println("Opçao invalida");
+            }
+
         }
 
     }

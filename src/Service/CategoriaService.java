@@ -35,7 +35,7 @@ public class CategoriaService {
     }
 
     public void remover(Integer id){
-        CategoriaService.getInstancia().remover(id);
+        CategoriaRepository.getInstancia().deletarCategoria(id);
     }
 
     public List<Categoria> getCategorias(){

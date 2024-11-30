@@ -48,7 +48,8 @@ public class Usuario {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Username: " + nome + "Email: " + email + "\n");
+        sb.append("\nId: " + idUsuario + " - Nome: " + nome + "\n");
+        sb.append("Email: " + email + "\n");
 
         return sb.toString();
     }

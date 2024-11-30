@@ -37,8 +37,6 @@ public class ItemEmprestimoService {
 
     public void remover(Integer id){
 
-        ItemEmprestimoRepository.getInstancia().buscarPorId(id).getLivroEmprestado().setDisponivel(true);
-
         ItemEmprestimoRepository.getInstancia().remover(id);
 
     }
