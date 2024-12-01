@@ -423,9 +423,20 @@ public class LivroController {
 
            if(!l.isEmpty()){
                System.out.println("Todos os livros:");
+
                for(Livro livros : l){
-                   System.out.println("\n" + livros.getTituloDoLivro() + "(" + livros.isDisponivel() + ")" + " - Id: " + livros.getIdLivro());
+
+
+                   if(livros.isDisponivel()){
+                       System.out.println("\n- " + livros.getTituloDoLivro() + " - ID: " + livros.getIdLivro() + " - Disponivel");
+                   }else{
+                       System.out.println("\n- " + livros.getTituloDoLivro() + " - ID: " + livros.getIdLivro() + " - Indisponivel");
+
+                   }
+
                }
+
+
            }else{
                System.out.println("Sem livros cadastrados");
            }

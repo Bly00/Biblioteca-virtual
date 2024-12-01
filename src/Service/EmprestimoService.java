@@ -33,6 +33,8 @@ public class EmprestimoService {
 
             i.setEmprestimoMae(novoEmprestimo);
 
+            i.getLivroEmprestado().setItemEmprestimo(i);
+
             livrosPegos.add(ItemEmprestimoService.getInstancia().adicionar(i.getLivroEmprestado()));
 
             i.setDevolucaoPrevista(novoEmprestimo.getDataDevolucao());
@@ -77,12 +79,32 @@ public class EmprestimoService {
         return EmprestimoRepository.getInstancia().getEmprestimos();
     }
 
-    public void editar(Integer id, LocalDate devolucao, List<ItemEmprestimo> disponibilizar, Usuario u){
+    public void editar(Integer id, LocalDate devolucao, List<ItemEmprestimo> removidos, Usuario u){
 
         Emprestimo e = EmprestimoService.getInstancia().buscarPorId(id);
 
         if(devolucao != null){
+
             e.setDataDevolucao(devolucao);
+
+            for(ItemEmprestimo i : e.getItensEmprestimo()){
+                i.setDevolucaoPrevista(devolucao);
+            }
+
+        }
+
+        if(!removidos.isEmpty() && removidos != null) {
+
+            for (ItemEmprestimo i : removidos) {
+
+                i.getLivroEmprestado().setDisponivel(true);
+
+                i.setDevolvido(true);
+
+                i.setDevolucaoPrevista(null);
+
+            }
+
         }
 
         if(u != null){

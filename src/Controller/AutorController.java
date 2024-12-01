@@ -1,8 +1,10 @@
 package Controller;
 
 import Model.Autor;
+import Model.Livro;
 import Service.AutorService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -77,7 +79,6 @@ public class AutorController {
     public void remover(){
 
        while(true){
-
 
            try{
 

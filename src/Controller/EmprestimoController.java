@@ -208,6 +208,10 @@ public class EmprestimoController {
 
     public void remover(){
 
+        if(EmprestimoService.getInstancia().getEmprestimo().isEmpty()){
+            System.out.println("Nao ha emprestimo");
+            return;
+        }
 
         while(true){
 
@@ -243,19 +247,43 @@ public class EmprestimoController {
 
     public void editar(){
 
-        System.out.print("Id do emprestimo a ser editado: ");
-        Emprestimo e = EmprestimoService.getInstancia().buscarPorId(sc.nextInt());
-
-        if(e == null){
-            System.out.println("Emprestimo invalido");
+        if(EmprestimoService.getInstancia().getEmprestimo().isEmpty()){
+            System.out.println("Sem emprestimo para editar");
             return;
+        }
+
+        Emprestimo e = null;
+
+        while(true){
+
+            System.out.print("0 - Sair \t Id do emprestimo a ser editado: ");
+
+            try{
+
+                int op = Integer.parseInt(sc.nextLine());
+
+                if(op == 0){
+                    return;
+                }
+
+                e = EmprestimoService.getInstancia().buscarPorId(op);
+
+                if(e != null){
+                    break;
+                }else{
+                    System.out.println("Opçao invalida");
+                }
+
+            }catch(Exception exception){
+                System.out.println("Opçao invalida");
+            }
+
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
 
         String devolucao = formatter.format(e.getDataDevolucao());
 
-        List<ItemEmprestimo> itensRemovidos = e.getItensEmprestimo();
         LocalDate novaDevolucao = null;
         Usuario novoSolicitante = null;
 
@@ -295,8 +323,6 @@ public class EmprestimoController {
                     System.out.print("Dia: ");
                     dia = sc.nextInt();
                     sc.nextLine();
-
-                    //Ajeitar logica de remover pois, ela so remove os item mas nao da lista do proprio emprestiomo
 
 
                     if(dia > 0 && dia < 31){
@@ -346,7 +372,6 @@ public class EmprestimoController {
                 novaDevolucao = LocalDate.of(LocalDate.now().getYear(), mes, dia);
         }
 
-        //Implemetar logica de remover itens
 
         System.out.println("Mudar solicitante?\n1 - Sim\n2 - Nao");
         op = sc.nextInt();
@@ -383,11 +408,138 @@ public class EmprestimoController {
 
 
 
-            EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), novaDevolucao, itensRemovidos, novoSolicitante);
+        }
+
+        this.editar(e);
+
+        EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), novaDevolucao, null, novoSolicitante);
+
+    }
+
+    public void editar(Emprestimo e){
+
+        System.out.println("Deseja remover algum item?\n1 - Sim\n2 - Nao");
+
+        int op;
+
+        while(true){
+
+            try{
+
+        op = Integer.parseInt(sc.nextLine());
+
+        if(op == 1 || op == 2){
+            break;
+        }else{
+            System.out.println("Opçao invalida");
+        }
+
+            }catch(Exception exception){
+                System.out.println("Opçao invalida");
+
+            }
 
         }
 
+        List<ItemEmprestimo> escolhidos = new ArrayList<>();
 
+        if(op == 1){
+
+            List<ItemEmprestimo> clone = e.getItensEmprestimo();
+
+            while(true){
+
+
+                while(true){
+
+                    if(escolhidos.containsAll(clone)){
+
+                        System.out.println("Todos os itens foram escolhidos para serem removidos\nisso fará com que o emprestimo seja deletado\nDeseja continuar?\t1 - Sim\t2 - Nao");
+
+                        while(true){
+
+                            try{
+
+                                op = Integer.parseInt(sc.nextLine());
+
+                                if(op == 1){
+
+                                    System.out.println("Adicionar logica de remoçao");
+
+                                    return ;
+
+                                }else if(op == 2){
+
+                                    if(!clone.contains(escolhidos.getLast())){
+                                        clone.add(escolhidos.getLast());
+                                    }
+
+                                    escolhidos.removeLast();
+
+                                    System.out.println("O ultimo livro foi restaurado");
+
+                                    break;
+
+                                }
+
+                            }catch(Exception exception){
+
+                                System.out.println("Opçao invalida");
+
+                            }
+
+                        }
+
+
+                    }
+
+                    for(ItemEmprestimo item : clone){
+
+                        if(!escolhidos.contains(item)){
+                            System.out.println(item.getLivroEmprestado().getTituloDoLivro() + " - ID: " + item.getIdItem());
+                        }
+
+                    }
+
+                    try{
+
+                        System.out.println("0 - Sair \t Id:");
+
+                        op = Integer.parseInt(sc.nextLine());
+
+                        if(op == 0){
+                            break;
+                        }
+
+                        ItemEmprestimo i = ItemEmprestimoService.getInstancia().buscaPorId(op);
+
+                        if(i != null && !escolhidos.contains(i)){
+
+                           escolhidos.add(i);
+
+                        }else if(i == null){
+                            System.out.println("Id invalido");
+                        }else if(escolhidos.contains(i)){
+                            System.out.println("Item ja escolhido");
+                        }
+
+                    }catch(Exception exception){
+                        System.out.println("Opçao invalida");
+                    }
+
+                }
+
+
+                    break;
+
+
+            }
+
+        }
+
+        EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), null, escolhidos, null);
+
+        return;
 
     }
 
@@ -398,8 +550,19 @@ public class EmprestimoController {
           return;
       }
 
+      int quantLivros = 0;
+
       for(Emprestimo e : EmprestimoService.getInstancia().getEmprestimo()){
-          System.out.println("Id: " + e.getIdEmprestimo() + " - Quantidade de livros: " + e.getItensEmprestimo().size());
+
+          for(ItemEmprestimo i : e.getItensEmprestimo()){
+
+              if(!i.isDevolvido()){
+                  quantLivros++;
+              }
+
+          }
+
+          System.out.println("Id: " + e.getIdEmprestimo() + " - Quantidade de livros: " + quantLivros);
       }
 
       return;
@@ -407,18 +570,31 @@ public class EmprestimoController {
 
     public void buscarPorId(){
 
-        System.out.println("Digite o id: ");
-        Emprestimo e = EmprestimoService.getInstancia().buscarPorId(sc.nextInt());
-        sc.nextLine();
+        while(true){
 
-        if(e == null){
-            System.out.println("Emprestimo nao existente");
-        }else{
+            System.out.print("0 - Sair \t Id: ");
 
             try{
-            System.out.println(e);
-            }catch(Exception exception){
-                System.out.println("Erro: " + exception.getMessage());
+
+            int op = Integer.parseInt(sc.nextLine());
+
+            if(op == 0){
+                return;
+            }
+
+            Emprestimo e = EmprestimoService.getInstancia().buscarPorId(op);
+
+            if(e != null){
+
+                System.out.println(e);
+                return;
+
+            }else{
+                System.out.println("Id invalido");
+            }
+
+            }catch(Exception e){
+                System.out.println("Opçao invalida");
             }
 
         }

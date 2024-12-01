@@ -61,7 +61,12 @@ public class ItemEmprestimo {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Id: " + idItem + " - Livro: " + livroEmprestado.getTituloDoLivro() + "\n");
+        if(isDevolvido()){
+            sb.append("Id: " + idItem + " - Livro: " + livroEmprestado.getTituloDoLivro() + " - Devolvido\n");
+        }else{
+            sb.append("Id: " + idItem + " - Livro: " + livroEmprestado.getTituloDoLivro() + " - Nao devolvido\n");
+
+        }
 
         return sb.toString();
     }

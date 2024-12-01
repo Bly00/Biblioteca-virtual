@@ -3,6 +3,9 @@ package Model;
 
 import Repository.LivroRepository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Livro {
 
     private int idLivro;
@@ -14,6 +17,7 @@ public class Livro {
     private String descricao;
     private boolean disponivel;
     private Usuario dono;
+    private ItemEmprestimo itemEmprestimo;
 
     public Livro(String tituloDoLivro, String descricao, Autor autor,  Editora editora, Categoria categoria, int paginas, Usuario dono) {
         this.autor = autor;
@@ -100,13 +104,18 @@ public class Livro {
         this.descricao = descricao;
     }
 
-    public void editarLivro(){
-        //edita as informaçoes antes passado na instanciaçao de um livro
+    public ItemEmprestimo getItemEmprestimo(){
+        return this.itemEmprestimo;
+    }
+
+    public void setItemEmprestimo(ItemEmprestimo itemEmprestimo) {
+        this.itemEmprestimo = itemEmprestimo;
     }
 
     public String toString(){
 
         StringBuilder sb = new StringBuilder();
+        DateTimeFormatter stf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         sb.append("Titulo: " + tituloDoLivro);
         sb.append("\n\nDescrição: " + getDescricao());
@@ -116,7 +125,7 @@ public class Livro {
         if(disponivel){
             sb.append("Disponivel: Sim\n");
         }else{
-            sb.append("Disponivel: Nao\n");
+            sb.append("Disponivel: Nao - Devolução: " + stf.format(this.itemEmprestimo.getDevolucaoPrevista()) + "\n");
         }
 
         return sb.toString();
