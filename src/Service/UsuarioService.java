@@ -30,15 +30,10 @@ public class UsuarioService {
     }
 
 
-    public void adicionar(String nome, String email, String senha){
+    public Usuario adicionar(Usuario novoUsuario){
 
-        if(nome == null || email == null || senha == null){
-            System.out.println("Erro: algum campo nao preenchido");
-            return;
-        }
-
-        Usuario usuario = new Usuario(nome,email,senha);
-        UsuarioRepository.getInstancia().salvarUsuario(usuario);
+        UsuarioRepository.getInstancia().salvarUsuario(novoUsuario);
+        return novoUsuario;
 
     }
 

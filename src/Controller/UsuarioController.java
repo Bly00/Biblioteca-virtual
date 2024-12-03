@@ -79,7 +79,10 @@ public class UsuarioController {
         System.out.print("Senha: ");
         senha = sc.nextLine();
 
-        UsuarioService.getInstancia().adicionar(nome, email, senha);
+        Usuario novoUsuario = new Usuario(nome, email, senha);
+
+        UsuarioService.getInstancia().adicionar(novoUsuario);
+
     }
 
     public void remover(){

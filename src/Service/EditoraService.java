@@ -19,19 +19,10 @@ public class EditoraService {
     }
     //---------------------------------------
 
-    public Editora adiconarEditora(String nome, String descricao){
-        if(nome == null){
-            System.out.println("Erro: O nome nao foi preenchido");
-            return null;
-        }
-        if(descricao == null){
-            System.out.println("Erro: A descriçao nao foi preenchido");
-            return null;
-        }
+    public Editora adiconar(Editora novaEditora){
 
-        Editora editora = new Editora(nome, descricao);
-        EditoraRepository.getInstancia().salvarEditora(editora);
-        return editora;
+        EditoraRepository.getInstancia().salvarEditora(novaEditora);
+        return novaEditora;
 
     }
 

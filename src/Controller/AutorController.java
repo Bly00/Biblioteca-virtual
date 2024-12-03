@@ -1,10 +1,8 @@
 package Controller;
 
 import Model.Autor;
-import Model.Livro;
 import Service.AutorService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -72,7 +70,9 @@ public class AutorController {
         System.out.print("Descriçao do autor:");
         descricao = sc.nextLine();
 
-        AutorService.getInstancia().cadastrarAutor(nome,descricao);
+        Autor novoAutor = new Autor(nome, descricao);
+
+        AutorService.getInstancia().cadastrar(novoAutor);
 
     }
 
@@ -90,7 +90,7 @@ public class AutorController {
                }
 
                if(AutorService.getInstancia().buscarPorId(op) != null){
-                   AutorService.getInstancia().removerAutor(op);
+                   AutorService.getInstancia().remover(op);
                    System.out.println("Autor removido");
                    return;
                }else{
@@ -108,72 +108,158 @@ public class AutorController {
 
     public void editar(){
 
-        int op = 0;
+        if(AutorService.getInstancia().get().isEmpty()){
+            System.out.println("Sem autores");
+            return;
+        }
 
-        String nonoNome = null;
+        String opS = null;
+
+        String novoNome = null;
         String novaDescricao = null;
 
-        if(!AutorService.getInstancia().getAutores().isEmpty()){
+        Autor a = null;
 
-            System.out.print("Id do autor que sera editada: ");
+        while(true){
 
-            AutorController.getInstancia().listar();
+                try{
 
-            Autor a = AutorService.getInstancia().buscarPorId(sc.nextInt());
+                    System.out.print("0 - Sair \t Id do autor que será editado: ");
 
-            sc.nextLine();
+                    a = AutorService.getInstancia().buscarPorId(Integer.parseInt(sc.nextLine()));
 
-            if(a != null){
+                    if(a != null){
+                        break;
+                    }else{
+                        System.out.println("\nId invalido\n");
+                    }
 
-                System.out.println("Nome atual: " + a.getNomeAutor() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
-
-                op = sc.nextInt();
-                sc.nextLine();
-
-                if(op == 1){
-                    System.out.print("Novo nome: ");
-                    nonoNome = sc.nextLine();
+                }catch (Exception exception){
+                    System.out.println("\nOpção invalida\n");
                 }
 
-                System.out.println("Descricao atual: " + a.getDescricaoAutor() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
-
-                op = sc.nextInt();
-                sc.nextLine();
-
-                if(op == 1){
-                    System.out.print("Nova descriçao: ");
-                    novaDescricao = sc.nextLine();
-                }
-
-                AutorService.getInstancia().editar(a.getIdAutor(), nonoNome,novaDescricao);
-
-            }else{
-                System.out.println("Id invalido");
-                return;
             }
 
-        }else{
-            System.out.println("Nao ha autores");
-        }
+            System.out.println("Nome atual: " + a.getNomeAutor());
+
+            while(true){
+
+                System.out.print("Deseja mudar? (s/n): ");
+
+                    opS = sc.nextLine();
+
+                    if(opS.equals("s") || opS.equals("S")){
+
+                        System.out.print("Novo nome: ");
+
+                        novoNome = sc.nextLine();
+
+                        break;
+
+                    }else if(opS.equals("n") || opS.equals("N")){
+
+                        break;
+
+                    }else{
+                        System.out.println("Opção invalida");
+                    }
+
+            }
+
+            System.out.println("Descrição atual:\n" + a.getDescricaoAutor());
+
+            while(true){
+
+                System.out.print("Deseja mudar? (s/n): ");
+
+                opS = sc.nextLine();
+
+                if(opS.equals("s") || opS.equals("S")){
+
+                    System.out.print("Nova descrição: ");
+
+                    novaDescricao = sc.nextLine();
+
+                    break;
+
+                }else if(opS.equals("n") || opS.equals("N")){
+
+                    break;
+
+                }else{
+                    System.out.println("Opção invalida");
+                }
+
+            }
+
+            if(novoNome != null){
+            System.out.println("Nome: " + a.getNomeAutor() + " --> " + novoNome);
+            }
+            if(novaDescricao != null){
+                System.out.println("Descrição: " + a.getDescricaoAutor() + " --> " + novaDescricao);
+            }
+
+            while(true){
+
+                System.out.print("Confirmar mudanças? (s/n): ");
+
+                opS = sc.nextLine();
+
+                if(opS.equals("s") || opS.equals("S")){
+
+                    Autor autor = new Autor(novoNome, novaDescricao);
+
+                    AutorService.getInstancia().editar(a.getIdAutor(), autor);
+
+                    return;
+
+                }else if(opS.equals("n") || opS.equals("N")){
+
+                    break;
+
+                }else{
+                    System.out.println("Opção invalida");
+                }
+
+                }
+
 
     }
 
     public void buscarPorId(){
 
-        System.out.print("Digite id: ");
-        Autor a = AutorService.getInstancia().buscarPorId(sc.nextInt());
+        while(true){
 
-        if(a != null){
-            System.out.println(a);
-        }else{
-            System.out.println("Autor nao encontrado");
+            System.out.print("0 - Sair \t Id do auto: ");
+
+            try{
+
+                int op = Integer.parseInt(sc.nextLine());
+
+                if(op == 0){
+                    return;
+                }
+
+                if(AutorService.getInstancia().buscarPorId(op) != null){
+
+                    System.out.println(AutorService.getInstancia().buscarPorId(op));
+                    break;
+
+                }else{
+                    System.out.println("Id invalido");
+                }
+
+            }catch(Exception exception){
+                System.out.println("\nOpção invalida\n");
+            }
+
         }
 
     }
 
     public void listar(){
 
-        List<Autor> a = AutorService.getInstancia().getAutores();
+        List<Autor> a = AutorService.getInstancia().get();
 
         if(a != null){
             System.out.println("Todos os autores: \n");

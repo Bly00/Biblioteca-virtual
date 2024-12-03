@@ -1,9 +1,7 @@
 package Controller;
 
 import Model.Editora;
-import Service.AutorService;
 import Service.EditoraService;
-import Service.EmprestimoService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -92,7 +90,9 @@ public class EditoraController {
         System.out.print("Descriçao da editora:");
         descricao = sc.nextLine();
 
-        EditoraService.getInstancia().adiconarEditora(nome,descricao);
+        Editora novaEditora = new Editora(nome, descricao);
+
+        EditoraService.getInstancia().adiconar(novaEditora);
 
     }
 

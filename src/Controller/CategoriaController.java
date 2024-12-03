@@ -2,9 +2,7 @@ package Controller;
 
 
 import Model.Categoria;
-import Service.AutorService;
 import Service.CategoriaService;
-import Service.EditoraService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -74,7 +72,9 @@ public class CategoriaController {
         System.out.print("Descriçao da categoria:");
         descricao = sc.nextLine();
 
-        CategoriaService.getInstancia().adicionar(nome,descricao);
+        Categoria novaCategoria = new Categoria(nome,descricao);
+
+        CategoriaService.getInstancia().adicionar(novaCategoria);
 
     }
 
@@ -113,51 +113,116 @@ public class CategoriaController {
 
     public void editar(){
 
-        String nonoNome = null;
+        String opS = null;
+
+        String novoNome = null;
         String novaDescricao = null;
-        int op = 0;
 
-        if(!CategoriaService.getInstancia().getCategorias().isEmpty()){
+        Categoria c = null;
 
-            System.out.print("Id da categoria que sera editada: ");
+        while(true){
 
-            EditoraController.getInstancia().listar();
+            try{
 
-            Categoria c = CategoriaService.getInstancia().buscarPorId(sc.nextInt());
-            sc.nextLine();
+                System.out.print("0 - Sair \t Id da categoria que será editado: ");
 
-            if(c != null){
+                c = CategoriaService.getInstancia().buscarPorId(Integer.parseInt(sc.nextLine()));
 
-                System.out.println("Nome atual: " + c.getNomeCategoria() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
-
-                op = sc.nextInt();
-                sc.nextLine();
-
-                if(op == 1){
-                    System.out.print("Novo nome: ");
-                    nonoNome = sc.nextLine();
+                if(c != null){
+                    break;
+                }else{
+                    System.out.println("\nId invalido\n");
                 }
 
-                System.out.println("Descricao atual: " + c.getDescricaoCategoria() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
-
-                op = sc.nextInt();
-                sc.nextLine();
-
-                if(op == 1){
-                    System.out.print("Nova descriçao: ");
-                    novaDescricao = sc.nextLine();
-                }
-
-                EditoraService.getInstancia().editar(c.getIdCategoria(), nonoNome,novaDescricao);
-
-            }else{
-                System.out.println("Id invalido");
-                return;
+            }catch (Exception exception){
+                System.out.println("\nOpção invalida\n");
             }
 
-        }else{
-            System.out.println("Nao ha categorias");
         }
+
+        System.out.println("Nome atual: " + c.getNomeCategoria());
+
+        while(true){
+
+            System.out.print("Deseja mudar? (s/n): ");
+
+            opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
+
+                System.out.print("Novo nome: ");
+
+                novoNome = sc.nextLine();
+
+                break;
+
+            }else if(opS.equals("n") || opS.equals("N")){
+
+                break;
+
+            }else{
+                System.out.println("Opção invalida");
+            }
+
+        }
+
+        System.out.println("Descrição atual:\n" + c.getDescricaoCategoria());
+
+        while(true){
+
+            System.out.print("Deseja mudar? (s/n): ");
+
+            opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
+
+                System.out.print("Nova descrição: ");
+
+                novaDescricao = sc.nextLine();
+
+                break;
+
+            }else if(opS.equals("n") || opS.equals("N")){
+
+                break;
+
+            }else{
+                System.out.println("Opção invalida");
+            }
+
+        }
+
+        if(novoNome != null){
+            System.out.println("Nome: " + c.getNomeCategoria() + " --> " + novoNome);
+        }
+        if(novaDescricao != null){
+            System.out.println("Descrição: " + c.getDescricaoCategoria() + " --> " + novaDescricao);
+        }
+
+        while(true){
+
+            System.out.print("Confirmar mudanças? (s/n): ");
+
+            opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
+
+                Categoria categoria = new Categoria(novoNome, novaDescricao);
+
+                CategoriaService.getInstancia().editar(c.getIdCategoria(), categoria);
+
+                return;
+
+            }else if(opS.equals("n") || opS.equals("N")){
+
+                break;
+
+            }else{
+                System.out.println("Opção invalida");
+            }
+
+        }
+
 
     }
 
@@ -176,7 +241,7 @@ public class CategoriaController {
 
     public void listar(){
 
-        List<Categoria> c = CategoriaService.getInstancia().getCategorias();
+        List<Categoria> c = CategoriaService.getInstancia().get();
 
         if(c != null){
             System.out.println("\nTodas as categorias:\n");

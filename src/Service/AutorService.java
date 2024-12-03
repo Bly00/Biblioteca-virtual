@@ -3,7 +3,6 @@ package Service;
 import Model.Autor;
 import Repository.AutorRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AutorService {
@@ -21,23 +20,14 @@ public class AutorService {
     }
     //--------------------------------------------------
 
-    public Autor cadastrarAutor(String nome, String descricao){
+    public Autor cadastrar(Autor autor){
 
-        if(nome == null){
-            System.out.println("Erro: O nome nao foi preenchido");
-            return null;
-        }
-        if(descricao == null){
-            System.out.println("Erro: A descriçao nao foi preenchido");
-            return null;
-        }
-
-        Autor autor = new Autor(nome, descricao);
         AutorRepository.getInstancia().salvarAutor(autor);
         return autor;
+
     }
 
-    public void removerAutor(Integer id){
+    public void remover(Integer id){
         if(id == null){
             System.out.println("Id invalido");
             return;
@@ -51,7 +41,7 @@ public class AutorService {
         }
     }
 
-    public List<Autor> getAutores(){
+    public List<Autor> get(){
         return AutorRepository.getInstancia().getAutores();
     }
 
@@ -59,15 +49,19 @@ public class AutorService {
             return AutorRepository.getInstancia().buscarPorId(id);
     }
 
-    public void editar(Integer id, String novoNome, String novaDescricao){
+    public void editar(Integer id, Autor a){
 
-        Autor a = AutorService.getInstancia().buscarPorId(id);
-
-        if(novoNome != null){
-            a.setNomeAutor(novoNome);
+        if(AutorService.getInstancia().buscarPorId(id) == null){
+            System.out.println("Id invalido");
+            return;
         }
-        if(novaDescricao != null){
-            a.setDescricaoAutor(novaDescricao);
+
+        if(a.getNomeAutor() != null){
+        AutorService.getInstancia().buscarPorId(id).setNomeAutor(a.getNomeAutor());
+        }
+
+        if(a.getDescricaoAutor() != null){
+            AutorService.getInstancia().buscarPorId(id).setDescricaoAutor(a.getDescricaoAutor());
         }
 
     }

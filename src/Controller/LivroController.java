@@ -61,7 +61,7 @@ public class LivroController {
 
     public void adicionar(){
 
-           if(AutorService.getInstancia().getAutores().isEmpty()){
+           if(AutorService.getInstancia().get().isEmpty()){
                System.out.println("Por favor, cadastre um autor");
                return;
            }
@@ -69,7 +69,7 @@ public class LivroController {
                System.out.println("Por favor, cadastre uma editora");
                return;
            }
-           if(CategoriaService.getInstancia().getCategorias().isEmpty()){
+           if(CategoriaService.getInstancia().get().isEmpty()){
                System.out.println("Por favor, cadastre uma categoria");
                return;
            }
@@ -234,7 +234,7 @@ public class LivroController {
 
         Livro livro = new Livro(titulo, descricao, a, e, c, paginas, u);
 
-        LivroService.getInstancia().adicionarLivro(livro);
+        LivroService.getInstancia().adicionar(livro);
 
         }
 

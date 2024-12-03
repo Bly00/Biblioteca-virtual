@@ -19,18 +19,10 @@ public class CategoriaService {
     }
     //-----------------------------------------
 
-    public void adicionar(String nome, String descricao){
-        if(nome == null){
-            System.out.println("Erro: O nome nao foi preenchido");
-            return;
-        }
-        if(descricao == null){
-            System.out.println("Erro: A descriçao nao foi preenchido");
-            return;
-        }
+    public Categoria adicionar(Categoria novaCategoria){
 
-        Categoria categoria = new Categoria(nome, descricao);
-        CategoriaRepository.getInstancia().salvarCategoria(categoria);
+        CategoriaRepository.getInstancia().salvarCategoria(novaCategoria);
+        return novaCategoria;
 
     }
 
@@ -38,7 +30,20 @@ public class CategoriaService {
         CategoriaRepository.getInstancia().deletarCategoria(id);
     }
 
-    public List<Categoria> getCategorias(){
+    public void editar(Integer id, Categoria categoria){
+
+        Categoria c = CategoriaService.getInstancia().buscarPorId(id);
+
+        if(categoria.getNomeCategoria() != null){
+            c.setNomeCategoria(categoria.getNomeCategoria());
+        }
+        if(categoria.getDescricaoCategoria() != null){
+            c.setDescricaoCategoria(categoria.getDescricaoCategoria());
+        }
+
+    }
+
+    public List<Categoria> get(){
         return CategoriaRepository.getInstancia().getCategorias();
     }
 

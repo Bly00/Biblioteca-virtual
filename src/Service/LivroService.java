@@ -20,11 +20,12 @@ public class LivroService {
     }
     //--------------------------------------
 
-    public void adicionarLivro(Livro l){
+    public Livro adicionar(Livro l){
 
         LivroRepository.getInstancia().salvarLivro(l);
 
-        System.out.println("Livro cadastrado com sucesso\n");
+        return l;
+
     }
 
 
