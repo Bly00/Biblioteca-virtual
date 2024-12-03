@@ -181,7 +181,7 @@ public class EmprestimoController {
 
             if(op == 1){
 
-                Emprestimo e = new Emprestimo(LocalDate.now(), dateDevolucao, itens, u);
+                Emprestimo e = new Emprestimo(dateDevolucao, itens, u);
 
                 EmprestimoService.getInstancia().adicionar(e);
 
@@ -245,302 +245,364 @@ public class EmprestimoController {
 
     }
 
+
+
+
     public void editar(){
 
         if(EmprestimoService.getInstancia().getEmprestimo().isEmpty()){
-            System.out.println("Sem emprestimo para editar");
+            System.out.println("Nao ha emrprestimos");
             return;
         }
 
-        Emprestimo e = null;
+        Emprestimo e;
+
+        int opN = 0;
+        String opS = null;
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM");
+        LocalDate novaDevolucao = null;
+        int mes = 0;
+        int dia = 0;
+
+        Usuario novoSolicitante = null;
 
         while(true){
 
-            System.out.print("0 - Sair \t Id do emprestimo a ser editado: ");
-
             try{
 
-                int op = Integer.parseInt(sc.nextLine());
+                System.out.print("0 - Sair \t ID do emprestimo: ");
+                opN = Integer.parseInt(sc.nextLine());
 
-                if(op == 0){
+                if(opN == 0){
                     return;
                 }
 
-                e = EmprestimoService.getInstancia().buscarPorId(op);
+                e = EmprestimoService.getInstancia().buscarPorId(opN);
 
                 if(e != null){
                     break;
                 }else{
-                    System.out.println("Opçao invalida");
+                    System.out.println("Id invalido");
                 }
 
-            }catch(Exception exception){
-                System.out.println("Opçao invalida");
+            }catch (Exception exception){
+                System.out.println("Opção invalida");
             }
 
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
 
-        String devolucao = formatter.format(e.getDataDevolucao());
-
-        LocalDate novaDevolucao = null;
-        Usuario novoSolicitante = null;
-
-        System.out.println("Date de devolução atual: " + devolucao + "\n");
-
-        System.out.println("Deseja mudar a data de devolução?\n1 - Sim\n2 - Nao");
-        int op = sc.nextInt();
-        sc.nextLine();
-
-        if(op == 1){
-
-            int mes, dia;
-
-            while(true){
-
-                System.out.println("Mes: ");
-                System.out.println("1 - Janeiro\n2 - Fevereiro\n3 - Março\n4 - Maio\n5 - Abril\n6 - Junho\n 7 - Julho\n8 - Agosto\n9 - Setembro\n10 - Outubro\n11 - Novembro\n12 - Dezembro");
-
-                mes = sc.nextInt();
-                sc.nextLine();
-
-                if(mes <= 12 && mes > 0){
-
-                    break;
-
-                }
-
-                System.out.println("Mes invalido\n");
-
-            }
-
-
-                if(mes == 4 || mes == 6 || mes == 9 || mes == 11){
-
-                    while(true){
-
-                    System.out.print("Dia: ");
-                    dia = sc.nextInt();
-                    sc.nextLine();
-
-
-                    if(dia > 0 && dia < 31){
-                        break;
-                    }
-
-                        System.out.println("Dia invalido, escolha novamente\n");
-
-                    }
-
-                }else
-
-                if(mes == 2){
-
-                    while(true){
-
-                        System.out.print("Dia: ");
-                        dia = sc.nextInt();
-                        sc.nextLine();
-
-                        if(dia > 0 && dia <= 28){
-                            break;
-                        }
-
-                        System.out.println("Dia invalido, escolha novamente\n");
-
-                    }
-
-                }else{
-
-                while(true){
-
-                    System.out.print("Dia: ");
-                    dia = sc.nextInt();
-                    sc.nextLine();
-
-                    if(dia > 0 && dia <= 31){
-                        break;
-                    }
-
-                    System.out.println("Dia invalido, escolha novamente\n");
-
-                }
-
-                }
-
-                novaDevolucao = LocalDate.of(LocalDate.now().getYear(), mes, dia);
-        }
-
-
-        System.out.println("Mudar solicitante?\n1 - Sim\n2 - Nao");
-        op = sc.nextInt();
-        sc.nextLine();
-
-        if(op == 1){
-
-            System.out.println("Solicitante atual: " + e.getSolicitante());
-
-            System.out.println("Usuarios: ");
-
-            UsuarioController.getInstance().listar();
-
-            while(true){
-
-                System.out.print("0 - Finalizar\nID: ");
-
-                op = sc.nextInt();
-                sc.nextLine();
-
-                if(op == 0){
-                    break;
-                }
-
-                novoSolicitante = UsuarioService.getInstancia().buscarPorId(op);
-
-                if(novoSolicitante != null){
-                    break;
-                }
-
-                System.out.println("Usuario invalido");
-
-            }
-
-
-
-        }
-
-        this.editar(e);
-
-        EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), novaDevolucao, null, novoSolicitante);
-
-    }
-
-    public void editar(Emprestimo e){
-
-        System.out.println("Deseja remover algum item?\n1 - Sim\n2 - Nao");
-
-        int op;
+        System.out.println("Data de devolução registrada: " + dtf.format(e.getDataDevolucaoPrevista()));
 
         while(true){
 
-            try{
+            System.out.println("Mudar data de devolução? (s/n)");
+            opS = sc.nextLine();
 
-        op = Integer.parseInt(sc.nextLine());
+            if(opS.equals("s") || opS.equals("S")){
 
-        if(op == 1 || op == 2){
-            break;
-        }else{
-            System.out.println("Opçao invalida");
-        }
-
-            }catch(Exception exception){
-                System.out.println("Opçao invalida");
-
-            }
-
-        }
-
-        List<ItemEmprestimo> escolhidos = new ArrayList<>();
-
-        if(op == 1){
-
-            List<ItemEmprestimo> clone = e.getItensEmprestimo();
-
-            while(true){
-
+                System.out.println("1 - Janeiro\n2 - Fevereiro\n3 - Março\n4 - Maio\n5 - Abril\n6 - Junho\n 7 - Julho\n8 - Agosto\n9 - Setembro\n10 - Outubro\n11 - Novembro\n12 - Dezembro");
 
                 while(true){
 
-                    if(escolhidos.containsAll(clone)){
-
-                        System.out.println("Todos os itens foram escolhidos para serem removidos\nisso fará com que o emprestimo seja deletado\nDeseja continuar?\t1 - Sim\t2 - Nao");
-
-                        while(true){
-
-                            try{
-
-                                op = Integer.parseInt(sc.nextLine());
-
-                                if(op == 1){
-
-                                    System.out.println("Adicionar logica de remoçao");
-
-                                    return ;
-
-                                }else if(op == 2){
-
-                                    if(!clone.contains(escolhidos.getLast())){
-                                        clone.add(escolhidos.getLast());
-                                    }
-
-                                    escolhidos.removeLast();
-
-                                    System.out.println("O ultimo livro foi restaurado");
-
-                                    break;
-
-                                }
-
-                            }catch(Exception exception){
-
-                                System.out.println("Opçao invalida");
-
-                            }
-
-                        }
-
-
-                    }
-
-                    for(ItemEmprestimo item : clone){
-
-                        if(!escolhidos.contains(item)){
-                            System.out.println(item.getLivroEmprestado().getTituloDoLivro() + " - ID: " + item.getIdItem());
-                        }
-
-                    }
-
                     try{
 
-                        System.out.println("0 - Sair \t Id:");
+                        mes = Integer.parseInt(sc.nextLine());
 
-                        op = Integer.parseInt(sc.nextLine());
+                        LocalDate.of(LocalDate.now().getYear(), mes, 1);
 
-                        if(op == 0){
-                            break;
-                        }
-
-                        ItemEmprestimo i = ItemEmprestimoService.getInstancia().buscaPorId(op);
-
-                        if(i != null && !escolhidos.contains(i)){
-
-                           escolhidos.add(i);
-
-                        }else if(i == null){
-                            System.out.println("Id invalido");
-                        }else if(escolhidos.contains(i)){
-                            System.out.println("Item ja escolhido");
-                        }
+                        break;
 
                     }catch(Exception exception){
-                        System.out.println("Opçao invalida");
+
+                        System.out.println("Dado informado invalido");
+
                     }
 
                 }
 
+                while (true) {
 
+                    System.out.print("Dia: ");
+
+                    try{
+
+                        dia = Integer.parseInt(sc.nextLine());
+
+                        novaDevolucao = LocalDate.of(LocalDate.now().getYear(), mes, dia);
+
+                        break;
+
+                    }catch(Exception exception){
+
+                        System.out.println("Opção invalida ou dia não compativel com o mês");
+
+                    }
+
+                }
+
+                break;
+
+            }else if(opS.equals("n") || opS.equals("N")){
+
+                break;
+
+            }else{
+
+                System.out.println("Opção invalida");
+
+            }
+        }
+
+        if(UsuarioService.getInstancia().getUsuarios().size() > 1){
+
+        System.out.println("Solicitante atual: " + e.getSolicitante().getNome());
+
+        while(true){
+
+            System.out.print("Deseja mudar? (s/n): ");
+            opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
+
+                while(true){
+
+                    try{
+
+                System.out.print("Id do novo solicitante: ");
+                opN = Integer.parseInt(sc.nextLine());
+
+                if(UsuarioService.getInstancia().buscarPorId(opN) != null && UsuarioService.getInstancia().buscarPorId(opN) != e.getSolicitante()){
+
+                    novoSolicitante = UsuarioService.getInstancia().buscarPorId(opN);
                     break;
 
+                }else{
+                    System.out.println("Id invalido ou o mesmo solicitante foi escolhido");
+                }
+
+                    }catch(Exception exception){
+
+                        System.out.println("Opção invalida");
+
+                    }
+
+                }
+
+                break;
+
+            }else if (opS.equals("n") || opS.equals("N")){
+
+                break;
+
+            }else{
+
+                System.out.println("Opção invalida");
 
             }
 
         }
 
-        EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), null, escolhidos, null);
+        }else{
 
-        return;
+            System.out.println("Nao poderá mudar o usuario, pois só há um");
 
+        }
+
+        while(true){
+
+            System.out.print("Deseja devolver algum livro do emprestimo? (s/n): ");
+            opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
+
+                editar(e);
+                break;
+
+            }else if (opS.equals("n") || opS.equals("N")){
+
+                break;
+
+            }else{
+
+                System.out.println("Opção invalida");
+            }
+
+        }
+
+
+        if(novaDevolucao != null){
+
+            System.out.println("Devolução: " + dtf.format(e.getDataDevolucaoPrevista()) + " --> " + dtf.format(novaDevolucao));
+
+        }
+        if(novoSolicitante != null){
+
+            System.out.println("Solicitante: " + e.getSolicitante().getNome() + " --> " + novoSolicitante.getNome());
+
+        }
+
+        if(novaDevolucao == null && novoSolicitante == null){
+            return;
+        }
+
+        while(true){
+
+            System.out.print("Deseja realizar mudanças? (s/n): ");
+            opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
+
+                EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), novaDevolucao, null, novoSolicitante);
+
+                System.out.println("Mudanças realizadas");
+
+                break;
+
+            }else if(opS.equals("n") || opS.equals("N")){
+
+                System.out.println("Mudanças canceladas");
+
+                break;
+
+            }else{
+
+                System.out.println("Opção invalida");
+
+            }
+
+        }
+
+    }
+
+    public void editar(Emprestimo e) {
+
+
+        int op = 0;
+        String opS;
+
+        List<ItemEmprestimo> escolhidos = new ArrayList<>();
+
+
+        List<ItemEmprestimo> clone = new ArrayList<>();
+
+        for(ItemEmprestimo item : e.getItensEmprestimo()){
+
+            if(!item.isDevolvido()){
+                clone.add(item);
+            }
+
+        }
+
+        while (true) {
+
+
+            while (true) {
+
+                if (escolhidos.containsAll(clone)) {
+
+
+                    while (true) {
+
+                        System.out.print("Todos os itens foram escolhidos para serem devolvidos\nisso fará com que o emprestimo seja finalizado\nDeseja continuar? (s/n): ");
+
+
+                        opS = sc.nextLine();
+
+                        if (opS.equals("s") || opS.equals("S")) {
+
+                            e.setDevolvido(true);
+
+                            e.setDateDevolucao(LocalDate.now());
+
+                            EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), null, escolhidos, null);
+
+                            return;
+
+                        } else if (opS.equals("n") || opS.equals("N")) {
+
+                            if (!clone.contains(escolhidos.getLast())) {
+                                clone.add(escolhidos.getLast());
+                            }
+
+                            escolhidos.removeLast();
+
+                            System.out.println("O ultimo livro foi restaurado");
+
+                            break;
+
+                        } else {
+                            System.out.println("Opção invalida");
+                        }
+
+                    }
+
+
+                }
+
+                for (ItemEmprestimo item : clone) {
+
+                    if (!escolhidos.contains(item)) {
+                        System.out.println(item.getLivroEmprestado().getTituloDoLivro() + " - ID: " + item.getIdItem());
+                    }
+
+                }
+
+                try {
+
+                    System.out.println("0 - Sair \t Id:");
+
+                    op = Integer.parseInt(sc.nextLine());
+
+                    if (op == 0) {
+                        break;
+                    }
+
+                    ItemEmprestimo i = ItemEmprestimoService.getInstancia().buscaPorId(op);
+
+                    if (i != null && !escolhidos.contains(i)) {
+
+                        escolhidos.add(i);
+
+                    } else if (i == null) {
+                        System.out.println("Id invalido");
+                    } else if (escolhidos.contains(i)) {
+                        System.out.println("Item ja escolhido");
+                    }
+
+                } catch (Exception exception) {
+                    System.out.println("Opçao invalida");
+                }
+
+            }
+
+            break;
+        }
+
+        System.out.println("Livros que serão devolvidos:");
+
+        for (ItemEmprestimo i : escolhidos) {
+
+            System.out.println(i.getLivroEmprestado().getTituloDoLivro());
+
+        }
+
+        while (true) {
+
+            System.out.println("Devolver? (s/n): ");
+            opS = sc.nextLine();
+
+            if (opS.equals("s") || opS.equals("S")) {
+                EmprestimoService.getInstancia().editar(e.getIdEmprestimo(), null, escolhidos, null);
+                return;
+            } else if (opS.equals("n") || opS.equals("N")) {
+                return;
+            } else {
+                System.out.println("Opção invalida");
+            }
+
+        }
     }
 
     public void listar(){
@@ -562,7 +624,11 @@ public class EmprestimoController {
 
           }
 
-          System.out.println("Id: " + e.getIdEmprestimo() + " - Quantidade de livros: " + quantLivros);
+          if(e.getDevolvido()){
+              System.out.println("Id: " + e.getIdEmprestimo() + " - Quantidade de livros: " + e.getItensEmprestimo().size() + " (Finalizado)");
+          }else{
+              System.out.println("Id: " + e.getIdEmprestimo() + " - Quantidade de livros: " + quantLivros + " (Nao finalizado)");
+          }
       }
 
       return;

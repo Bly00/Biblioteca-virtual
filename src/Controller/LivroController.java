@@ -124,12 +124,7 @@ public class LivroController {
             }
 
 
-
-
-
-
-
-            while(true){
+        while(true){
 
                 EditoraController.getInstancia().listar();
 
@@ -265,11 +260,35 @@ public class LivroController {
         Livro l = LivroService.getInstancia().buscarPorId(op);
 
             if(l != null){
-            System.out.println("Livro: " + l.getTituloDoLivro() + " removido");
-            LivroService.getInstancia().remover(l.getIdLivro());
-            break;
+
+                System.out.println("\nDeseja remover o livro:\n ");
+
+                System.out.println(l);
+
+                System.out.print("s/n: ");
+
+                String opcao = sc.nextLine();
+
+                if(opcao.equals("s") || opcao.equals("S")){
+
+                    LivroService.getInstancia().remover(l.getIdLivro());
+                    System.out.println("O livro foi removido");
+                    break;
+
+                }else if(opcao.equals("n") || opcao.equals("N")){
+
+                    return;
+
+                }else{
+
+                    System.out.println("Opção invalida");
+
+                }
+
         }else{
+
             System.out.println("Livro nao encontrado");
+
         }
 
         }catch(Exception e){

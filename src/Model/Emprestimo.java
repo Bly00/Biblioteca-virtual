@@ -1,35 +1,35 @@
 package Model;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.SimpleTimeZone;
 
 public class Emprestimo {
 
     // Atributos
     private Integer idEmprestimo;
     private LocalDate dataEmprestimo;
-    private LocalDate dataDevolucao;
+    private LocalDate dataDevolucaoPrevista;
     private List<ItemEmprestimo> itensEmprestimo;
     private Usuario solicitante;
+    private Boolean devolvido;
+    private LocalDate dateDevolucao;
 
-    public Emprestimo(LocalDate dataEmprestimo,LocalDate dataDevolucao ,List<ItemEmprestimo> itensEmprestimo, Usuario solicitante) {
-        this.dataEmprestimo = dataEmprestimo;
+    public Emprestimo(LocalDate dataDevolucaoPrevista, List<ItemEmprestimo> itensEmprestimo, Usuario solicitante) {
+        this.dataEmprestimo = LocalDate.now();
         this.itensEmprestimo = itensEmprestimo;
         this.solicitante = solicitante;
-        this.dataDevolucao = dataDevolucao;
+        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
+        this.devolvido = false;
     }
     public Emprestimo(){}
 
-    public LocalDate getDataDevolucao() {
-        return dataDevolucao;
+    public LocalDate getDataDevolucaoPrevista() {
+        return dataDevolucaoPrevista;
     }
 
-    public void setDataDevolucao(LocalDate dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
+    public void setDataDevolucaoPrevista(LocalDate dataDevolucaoPrevista) {
+        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
     }
 
     public LocalDate getDataEmprestimo() {
@@ -64,18 +64,40 @@ public class Emprestimo {
         this.itensEmprestimo = l;
     }
 
+    public Boolean getDevolvido(){
+        return this.devolvido;
+    }
+
+    public void setDevolvido(Boolean devolvido){
+        this.devolvido = devolvido;
+    }
+
+    public LocalDate getDateDevolucao(){
+        return this.dateDevolucao;
+    }
+
+    public void setDateDevolucao(LocalDate dateDevolucao){
+        this.dateDevolucao = dateDevolucao;
+    }
+
     public String toString(){
 
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM");
 
         String dataEmprestimo = f.format(this.dataEmprestimo);
-        String dataDevolucao = f.format(this.dataDevolucao);
+        String dataDevolucaoPrevista = f.format(this.dataDevolucaoPrevista);
+
 
         StringBuilder sb = new StringBuilder();
 
         sb.append("Id: " + idEmprestimo);
         sb.append(" - Data do empestimo: " + dataEmprestimo);
-        sb.append(" - Data de devoluçao: " + dataDevolucao);
+        sb.append(" - Data de devoluçao prevista: " + dataDevolucaoPrevista);
+
+        if(devolvido){
+            sb.append(" - Data da devolução: " + f.format(dateDevolucao));
+        }
+
         sb.append("\nSolicitante: " +  solicitante.getNome() + " - (ID: " + solicitante.getIdUsuario() + ")\n");
 
 

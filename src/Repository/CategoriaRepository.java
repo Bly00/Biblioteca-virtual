@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class CategoriaRepository {
 
-
         //Singleton
         private CategoriaRepository(){}
 

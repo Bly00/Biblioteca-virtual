@@ -2,7 +2,6 @@ package Service;
 
 import Model.Emprestimo;
 import Model.ItemEmprestimo;
-import Model.Livro;
 import Model.Usuario;
 import Repository.EmprestimoRepository;
 
@@ -37,7 +36,7 @@ public class EmprestimoService {
 
             livrosPegos.add(ItemEmprestimoService.getInstancia().adicionar(i.getLivroEmprestado()));
 
-            i.setDevolucaoPrevista(novoEmprestimo.getDataDevolucao());
+            i.setDevolucaoPrevista(novoEmprestimo.getDataDevolucaoPrevista());
         }
 
         novoEmprestimo.setItensEmprestimo(livrosPegos);
@@ -85,7 +84,7 @@ public class EmprestimoService {
 
         if(devolucao != null){
 
-            e.setDataDevolucao(devolucao);
+            e.setDataDevolucaoPrevista(devolucao);
 
             for(ItemEmprestimo i : e.getItensEmprestimo()){
                 i.setDevolucaoPrevista(devolucao);
