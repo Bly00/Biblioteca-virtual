@@ -1,5 +1,7 @@
 package Controller;
 
+import Main.Sistema;
+import Main.Status;
 import Model.Emprestimo;
 import Model.ItemEmprestimo;
 import Model.Livro;
@@ -12,6 +14,8 @@ import Service.UsuarioService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static Main.Main.status;
 
 public class EmprestimoController{
 
@@ -165,9 +169,13 @@ public class EmprestimoController{
         return;
     }
 
-        Usuario u;
+        Usuario u = null;
 
-    while(true){
+        if(status == Status.SISTEMA){
+            u = Sistema.getInstancia().getUser();
+        }else if(status == Status.TESTE){
+
+        while(true){
 
         System.out.print("Id do usuario solicitante: ");
 
@@ -190,6 +198,8 @@ public class EmprestimoController{
         }
 
     }
+
+        }
 
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -551,6 +561,14 @@ public class EmprestimoController{
 
     public void listar(){
 
+        List<Emprestimo> emprestimos = new ArrayList<>();
+
+        if(status == Status.SISTEMA){
+            emprestimos = Sistema.getInstancia().getUser().getEmprestimosDoUsuario();
+        }else{
+            emprestimos = EmprestimoService.getInstancia().getEmprestimo();
+        }
+
         if(EmprestimoService.getInstancia().getEmprestimo().isEmpty()){
             System.out.println("\nSem emprestimos");
             return;
@@ -558,7 +576,7 @@ public class EmprestimoController{
 
         int quantLivros = 0;
 
-        for(Emprestimo e : EmprestimoService.getInstancia().getEmprestimo()){
+        for(Emprestimo e : emprestimos){
 
             for(ItemEmprestimo i : e.getItensEmprestimo()){
 

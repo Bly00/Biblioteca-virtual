@@ -1,9 +1,13 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Categoria {
     private Integer idCategoria;
     private String nomeCategoria;
     private String descricaoCategoria;
+    private List<Livro> livros = new ArrayList<>();
 
     public Categoria(String nomeCategoria, String descricaoCategoria) {
         this.descricaoCategoria = descricaoCategoria;

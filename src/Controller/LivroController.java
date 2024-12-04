@@ -1,11 +1,15 @@
 package Controller;
 
+import Main.Sistema;
+import Main.Status;
 import Model.*;
 import Service.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static Main.Main.status;
 
 public class LivroController {
 
@@ -236,6 +240,11 @@ public class LivroController {
 
         }
 
+            if(status == Status.SISTEMA){
+
+                u = Sistema.getInstancia().getUser();
+
+        }else if(status == Status.TESTE){
 
             while(true){
 
@@ -257,6 +266,8 @@ public class LivroController {
                 }catch(Exception exception){
                     System.out.println("Opçao invalida");
                 }
+
+            }
 
             }
 

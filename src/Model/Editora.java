@@ -1,10 +1,14 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Editora {
 
     private Integer idEditora;
     private String nomeEditora;
     private String descricaoEditora;
+    private List<Livro> livros = new ArrayList<>();
 
     public Editora(String nomeEditora, String descricaoEditora) {
         this.descricaoEditora = descricaoEditora;

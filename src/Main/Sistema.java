@@ -1,8 +1,11 @@
 package Main;
 
 import Controller.*;
+import Model.Emprestimo;
 import Model.Livro;
 import Model.Usuario;
+import Service.AutorService;
+import Service.EmprestimoService;
 import Service.LivroService;
 import Service.UsuarioService;
 
@@ -31,6 +34,10 @@ public class Sistema {
 
     private Usuario user;
 
+    public Usuario getUser(){
+        return user;
+    }
+
     public void iniciar(){
 
         int opN = 0;
@@ -43,7 +50,7 @@ public class Sistema {
 
             while(true){
 
-            System.out.println("\n\t\t\t\t\t\t\t\t\t\t\t\t\tSobre livros(1)\n\n\t\t\t\t\t\t\t\t\t\t\t\tVer pefil do usuario(2)");
+            System.out.println("\n\t\t\t\t\t\t\t\t\t\t\t\t\tSobre livros(1)\n\n\t\t\t\t\t\t\t\t\t\t\t\tSobre perfil de usuario(2)\n\n\t\t\t\t\t\t\t\t\t\t\t\tSobre emprestimos(3)\n");
 
             while(true){
 
@@ -65,6 +72,8 @@ public class Sistema {
 
                 case 2 -> {System.out.println(UsuarioService.getInstancia().buscarPorId(user.getIdUsuario()));}
 
+                case 3 -> {Sistema.getInstancia().emprestimos();}
+
                 case 0 -> {return;}
 
                 default -> {System.out.println("Opção invalida");}
@@ -80,6 +89,143 @@ public class Sistema {
 
     }
 
+    public void emprestimos(){
+
+        int opN = 0;
+
+        while(true){
+
+            System.out.println("\t\tVoltar(0)\nRealizar emprestimo(1)\n\nVer meus emprestimos(2)\n\n");
+
+            System.out.print("Sua opção: ");
+
+            opN = opcao(sc.nextLine());
+
+            switch (opN){
+
+                case 1 -> {EmprestimoController.getInstance().adicionar();}
+
+                case 2 -> {Sistema.getInstancia().verMeusEmprestimos();}
+
+                case 0 -> {return;}
+
+                default -> {
+                    System.out.println("Opção invalida");
+                }
+
+            }
+
+        }
+
+    }
+
+    public void verMeusEmprestimos(){
+
+        if(user.getEmprestimosDoUsuario().isEmpty()){
+            System.out.println("\nVocê não tem emprestimos\n");
+            return;
+        }
+
+        System.out.println("\nDados dos seus emprestimos\n");
+
+        System.out.println("Total de emprestimos: " + user.getEmprestimosDoUsuario().size());
+
+        System.out.print("\nEmprestimos no momento: ");
+
+        int q = 0;
+
+        for(Emprestimo e : user.getEmprestimosDoUsuario()){
+
+            if(!e.getDevolvido()){
+                q++;
+            }
+
+        }
+
+        System.out.println(q);
+
+        q = 0;
+
+        for(Emprestimo e : user.getEmprestimosDoUsuario()){
+
+            if(e.getDevolvido()){
+                q++;
+            }
+
+        }
+
+        System.out.println("Emprestimos finalizados: "  + q);
+
+        if(!user.getEmprestimosDoUsuario().isEmpty()){
+
+            System.out.print("\nEmprestimos: \n");
+
+
+            for(Emprestimo e : user.getEmprestimosDoUsuario()){
+
+                if(e.getDevolvido()){
+
+                    System.out.print("ID: " + e.getIdEmprestimo() + " - Finalizado\n");
+
+                }else{
+
+                    System.out.print("ID: " + e.getIdEmprestimo() + " - Nao finalizado\n");
+                }
+
+            }
+
+        }
+
+        while(true){
+
+            int opN = 0;
+
+            System.out.println("\n\t\tVoltar(0)\n\nDevolver(1)\n");
+
+            opN = opcao(sc.nextLine());
+
+            switch (opN){
+
+                case 1 -> {
+
+                    EmprestimoController.getInstance().listar();
+
+                    Emprestimo e = null;
+
+                    while(true){
+
+                        System.out.print("\nId do emprestimo: ");
+
+                        opN = opcao(sc.nextLine());
+
+                        e = EmprestimoService.getInstancia().buscarPorId(opN);
+
+                        if(e != null  && user.getEmprestimosDoUsuario().contains(e)){
+                            break;
+                        }else{
+                            System.out.println("\nOpção invalida\n");
+                        }
+
+
+                    }
+
+                    EmprestimoController.getInstance().devolver(e);
+
+                }
+
+                case 0 -> {return;}
+
+                default -> {
+                    System.out.println("\nOpção invalida\n");
+                }
+
+
+            }
+
+
+        }
+
+    }
 
     public void livrosDisponiveis(){
 
@@ -268,6 +414,23 @@ public class Sistema {
                 }
 
             }
+
+        }
+
+    }
+
+    public void porAutor(){
+
+        AutorController.getInstancia().listar();
+        int opN = 0;
+
+        while(true){
+
+            System.out.print("ID do autor: ");
+
+            opN = opcao(sc.nextLine());
+
+
 
         }
 

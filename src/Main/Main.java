@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static Status status;
+
     public static void main(String[] args) {
 
 
@@ -65,53 +67,22 @@ public class Main {
             switch(opS){
 
                 case "s", "S" -> {
-                    while(true){
 
-                       Sistema.getInstancia().iniciar();
-                       return;
+                    status = Status.SISTEMA;
 
-                    }
+                    Sistema.getInstancia().iniciar();
+
                 }
 
                 case "t", "T" ->{
-                    while(true){
 
-                        System.out.println("\tMENU TESTES");
+                    status = Status.TESTE;
 
-                        System.out.println("1 - Livro\n2 - Autor\n3 - Editora\n4 - Categoria\n5 - Usuario\n6 - Emprestimo");
+                   Teste.getInstancia().teste();
 
-                        try{
-
-                            int op = Integer.parseInt(sc.nextLine());
-
-                            switch (op){
-
-                                case 1 -> LivroController.getInstancia().iniciar();
-
-                                case 2 -> AutorController.getInstancia().iniciar();
-
-                                case 3 -> EditoraController.getInstancia().iniciar();
-
-                                case 4 -> CategoriaController.getInstancia().iniciar();
-
-                                case 5 -> UsuarioController.getInstance().iniciar();
-
-                                case 6 -> EmprestimoController.getInstance().iniciar();
-
-                                case 0 -> {return;}
-
-                                default -> {
-                                    System.out.println("Opçao invalida");
-                                }
-
-                            }
-
-                        }catch (Exception exception){
-                            System.out.println("Opçao invalida");
-                        }
-
-                    }
                 }
+
+                case "0" -> {return;}
 
                 default -> {
                     System.out.println("\nOpção invalida\n");

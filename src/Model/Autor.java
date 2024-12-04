@@ -1,10 +1,14 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class    Autor {
 
     private Integer idAutor;
     private String nomeAutor;
     private String descricaoAutor;
+    private List<Livro> livros = new ArrayList<>();
 
     public Autor(){}
 
