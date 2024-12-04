@@ -43,6 +43,8 @@ public class EmprestimoService {
 
         EmprestimoRepository.getInstancia().salvarEmprestimo(novoEmprestimo);
 
+        novoEmprestimo.getSolicitante().getEmprestimosDoUsuario().add(novoEmprestimo);
+
     }
 
     public void remover(Integer id){

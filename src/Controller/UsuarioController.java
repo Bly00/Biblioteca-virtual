@@ -179,17 +179,22 @@ public class UsuarioController {
     }
 
     public void listar(){
+
         List<Usuario> u = UsuarioService.getInstancia().getUsuarios();
 
         if(u != null){
+
             System.out.println("\nTodos os usuarios\n");
             for(Usuario usuario : u){
                 System.out.println(usuario.getNome() + " - Id: " + usuario.getIdUsuario());
             }
+
         }else{
+
             System.out.println("Nao ha usuarios cadastrados");
+
         }
-        System.out.println();
+
     }
 
     public void buscarPorId(){
@@ -206,7 +211,9 @@ public class UsuarioController {
             }
 
             if (UsuarioService.getInstancia().buscarPorId(op) != null) {
+
                 System.out.println(UsuarioService.getInstancia().buscarPorId(op));
+
                 return;
             } else {
                 System.out.println("Id invalido");

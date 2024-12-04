@@ -1,27 +1,25 @@
 package Model;
 
 
-import Repository.LivroRepository;
-
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Livro {
 
     private int idLivro;
     private String tituloDoLivro;
-    private Autor autor;
+    private List<Autor> autores;
     private Editora editora;
-    private Categoria categoria;
+    private List<Categoria> categorias;
     private int paginas;
     private String descricao;
     private boolean disponivel;
     private Usuario dono;
     private ItemEmprestimo itemEmprestimo;
 
-    public Livro(String tituloDoLivro, String descricao, Autor autor,  Editora editora, Categoria categoria, int paginas, Usuario dono) {
-        this.autor = autor;
-        this.categoria = categoria;
+    public Livro(String tituloDoLivro, String descricao, List<Autor> autores, Editora editora, List<Categoria> categorias, int paginas, Usuario dono) {
+        this.autores = autores;
+        this.categorias = categorias;
         this.disponivel = true;
         this.dono = dono;
         this.editora = editora;
@@ -32,20 +30,20 @@ public class Livro {
 
     public Livro(){}
 
-    public Autor getAutor() {
-        return autor;
+    public List<Autor> getAutores() {
+        return autores;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setAutores(List<Autor> autores){
+        this.autores = autores;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public void setCategorias(List<Categoria> categorias){
+        this.categorias = categorias;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public List<Categoria> getCategorias() {
+        return categorias;
     }
 
     public boolean isDisponivel() {
@@ -112,6 +110,7 @@ public class Livro {
         this.itemEmprestimo = itemEmprestimo;
     }
 
+    @Override
     public String toString(){
 
         StringBuilder sb = new StringBuilder();
@@ -119,9 +118,27 @@ public class Livro {
 
         sb.append("Titulo: " + tituloDoLivro);
         sb.append("\n\nDescrição: " + getDescricao());
-        sb.append("\n\nAutor: " + autor.getNomeAutor() + " - Editora: " + editora.getNomeEditora() + " - Categoria: " + categoria.getNomeCategoria());
+
+        sb.append("\n\nEditora: " + editora.getNomeEditora());
+
+        sb.append("\n\nAutores: \n");
+
+        for(Autor a : autores){
+
+            sb.append(a.getNomeAutor() + "\n");
+
+        }
+
+        sb.append("\nCategorias\n");
+
+        for(Categoria c : categorias){
+
+            sb.append(c.getNomeCategoria() + "\n");
+
+        }
+
         sb.append("\nPaginas: " + paginas);
-        sb.append("\nQuem emprestou: " + dono.getNome() + "\n");
+        sb.append("\nQuem emprestou: " + dono.getNome() + " - ID: " + dono.getIdUsuario() + "\n");
         if(disponivel){
             sb.append("Disponivel: Sim\n");
         }else{
@@ -131,11 +148,6 @@ public class Livro {
         return sb.toString();
 
     }
-
-//    public boolean verificarDisponibilidade(){
-//        //apenas mostrar se ele esta disponivel
-//        return disponivel;
-//    }
 
 
 

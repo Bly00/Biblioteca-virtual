@@ -24,6 +24,8 @@ public class LivroService {
 
         LivroRepository.getInstancia().salvarLivro(l);
 
+        l.getDono().getLivrosDoUsuario().add(l);
+
         return l;
 
     }
@@ -41,28 +43,44 @@ public class LivroService {
         return LivroRepository.getInstancia().buscarPorId(id);
     }
 
-    public void editar(Integer id, String novoTitulo, Autor novoAutor, Editora novaEditora, Categoria novaCategoria, Integer paginas, Usuario novoDono){
-
+    public void editar(Integer id, String novoTitulo, String novaDescricao, List<Autor> novosAutores, Editora novaEditora, List<Categoria> novasCategorias, Integer paginas, Usuario novoDono) {
         Livro l = LivroService.getInstancia().buscarPorId(id);
 
-        if(novoTitulo != null){
+        if (l == null) {
+            System.out.println("Livro não encontrado.");
+            return;
+        }
+
+        if (novoTitulo != null && !novoTitulo.isEmpty()) {
             l.setTituloDoLivro(novoTitulo);
         }
-        if(novoAutor != null){
-            l.setAutor(novoAutor);
+
+        if(novaDescricao != null && !novaDescricao.isEmpty()){
+            l.setDescricao(novaDescricao);
         }
-        if(novaEditora != null){
+
+        if (novosAutores != null && !novosAutores.isEmpty()) {
+            l.setAutores(novosAutores);
+        }
+
+        if (novaEditora != null) {
             l.setEditora(novaEditora);
         }
-        if(novaCategoria != null){
-            l.setCategoria(novaCategoria);
+
+        if (novasCategorias != null && !novasCategorias.isEmpty()) {
+            l.setCategorias(novasCategorias);
         }
-        if(paginas != 0){
+
+        if (paginas != null && paginas > 0) {
             l.setPaginas(paginas);
         }
-        if(novoDono != null){
+
+        if (novoDono != null) {
             l.setDono(novoDono);
         }
+
+        System.out.println("Livro editado com sucesso.");
     }
+
 
 }

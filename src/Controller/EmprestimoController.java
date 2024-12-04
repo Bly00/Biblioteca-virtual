@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class EmprestimoController {
+public class EmprestimoController{
 
     private EmprestimoController(){}
 
@@ -453,11 +453,11 @@ public class EmprestimoController {
             if(opS.equals("s") || opS.equals("S")){
 
                 devolver(e);
-                
+
                 if(e.getDevolvido()){
                     return;
                 }
-                
+
                 break;
 
             }else if (opS.equals("n") || opS.equals("N")){
@@ -514,6 +514,70 @@ public class EmprestimoController {
 
         }
 
+    }
+
+    public void buscarPorId(){
+
+        while(true){
+
+            System.out.print("0 - Sair \t Id: ");
+
+            try{
+
+                int op = Integer.parseInt(sc.nextLine());
+
+                if(op == 0){
+                    return;
+                }
+
+                Emprestimo e = EmprestimoService.getInstancia().buscarPorId(op);
+
+                if(e != null){
+
+                    System.out.println(e);
+                    return;
+
+                }else{
+                    System.out.println("Id invalido");
+                }
+
+            }catch(Exception e){
+                System.out.println("Opçao invalida");
+            }
+
+        }
+
+    }
+
+    public void listar(){
+
+        if(EmprestimoService.getInstancia().getEmprestimo().isEmpty()){
+            System.out.println("\nSem emprestimos");
+            return;
+        }
+
+        int quantLivros = 0;
+
+        for(Emprestimo e : EmprestimoService.getInstancia().getEmprestimo()){
+
+            for(ItemEmprestimo i : e.getItensEmprestimo()){
+
+                if(!i.isDevolvido()){
+                    quantLivros++;
+                }
+
+            }
+
+
+
+            if(e.getDevolvido()){
+                System.out.println("\nId: " + e.getIdEmprestimo() + " - Quantidade de livros: " + e.getItensEmprestimo().size() + " (Finalizado)");
+            }else{
+                System.out.println("\nId: " + e.getIdEmprestimo() + " - Quantidade de livros: " + quantLivros + " (Nao finalizado)");
+            }
+        }
+
+        return;
     }
 
     public void devolver(Emprestimo e) {
@@ -644,68 +708,8 @@ public class EmprestimoController {
         }
     }
 
-    public void listar(){
-
-      if(EmprestimoService.getInstancia().getEmprestimo().isEmpty()){
-          System.out.println("\nSem emprestimos");
-          return;
-      }
-
-      int quantLivros = 0;
-
-      for(Emprestimo e : EmprestimoService.getInstancia().getEmprestimo()){
-
-          for(ItemEmprestimo i : e.getItensEmprestimo()){
-
-              if(!i.isDevolvido()){
-                  quantLivros++;
-              }
-
-          }
 
 
 
-          if(e.getDevolvido()){
-              System.out.println("\nId: " + e.getIdEmprestimo() + " - Quantidade de livros: " + e.getItensEmprestimo().size() + " (Finalizado)");
-          }else{
-              System.out.println("\nId: " + e.getIdEmprestimo() + " - Quantidade de livros: " + quantLivros + " (Nao finalizado)");
-          }
-      }
-
-      return;
-    }
-
-    public void buscarPorId(){
-
-        while(true){
-
-            System.out.print("0 - Sair \t Id: ");
-
-            try{
-
-            int op = Integer.parseInt(sc.nextLine());
-
-            if(op == 0){
-                return;
-            }
-
-            Emprestimo e = EmprestimoService.getInstancia().buscarPorId(op);
-
-            if(e != null){
-
-                System.out.println(e);
-                return;
-
-            }else{
-                System.out.println("Id invalido");
-            }
-
-            }catch(Exception e){
-                System.out.println("Opçao invalida");
-            }
-
-        }
-
-    }
 
 }
