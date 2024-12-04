@@ -126,7 +126,13 @@ public class AutorController {
 
                     System.out.print("0 - Sair \t Id do autor que será editado: ");
 
-                    a = AutorService.getInstancia().buscarPorId(Integer.parseInt(sc.nextLine()));
+                    int opN = Integer.parseInt(sc.nextLine());
+
+                    if (opN == 0){
+                        return;
+                    }
+
+                    a = AutorService.getInstancia().buscarPorId(opN);
 
                     if(a != null){
                         break;
@@ -236,6 +242,8 @@ public class AutorController {
 
                 int op = Integer.parseInt(sc.nextLine());
 
+                System.out.println();
+
                 if(op == 0){
                     return;
                 }
@@ -250,7 +258,7 @@ public class AutorController {
                 }
 
             }catch(Exception exception){
-                System.out.println("\nOpção invalida\n");
+                System.out.println("\nOpção invalida");
             }
 
         }

@@ -2,6 +2,7 @@ package Controller;
 
 
 import Model.Categoria;
+import Service.AutorService;
 import Service.CategoriaService;
 
 import java.util.List;
@@ -126,7 +127,13 @@ public class CategoriaController {
 
                 System.out.print("0 - Sair \t Id da categoria que será editado: ");
 
-                c = CategoriaService.getInstancia().buscarPorId(Integer.parseInt(sc.nextLine()));
+                int opN = Integer.parseInt(sc.nextLine());
+
+                if (opN == 0) {
+                    return;
+                }
+
+                c = CategoriaService.getInstancia().buscarPorId(opN);
 
                 if(c != null){
                     break;
@@ -223,18 +230,37 @@ public class CategoriaController {
 
         }
 
-
     }
 
     public void buscarPorId(){
 
-        System.out.print("Digite o id: ");
-        Categoria c = CategoriaService.getInstancia().buscarPorId(sc.nextInt());
+        while(true){
 
-        if(c != null){
-            System.out.println(c);
-        }else {
-            System.out.println("Categoria nao encontrada");
+            System.out.print("\n0 - Sair \t Id da categoria: ");
+
+            try{
+
+                int op = Integer.parseInt(sc.nextLine());
+
+                System.out.println();
+
+                if(op == 0){
+                    return;
+                }
+
+                if(CategoriaService.getInstancia().buscarPorId(op) != null){
+
+                    System.out.println(CategoriaService.getInstancia().buscarPorId(op));
+                    break;
+
+                }else{
+                    System.out.println("Id invalido");
+                }
+
+            }catch(Exception exception){
+                System.out.println("\nOpção invalida");
+            }
+
         }
 
     }

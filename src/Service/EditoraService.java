@@ -1,5 +1,6 @@
 package Service;
 
+import Model.Categoria;
 import Model.Editora;
 import Repository.EditoraRepository;
 
@@ -38,17 +39,14 @@ public class EditoraService {
         EditoraRepository.getInstancia().deletarEditora(id);
     }
 
-    public void editar(Integer id, String novoNome, String novaDescriçao){
+    public void editar(Integer id, Editora e){
 
-        Editora e = EditoraService.getInstancia().buscarPorId(id);
-
-        if(novoNome != null){
-            e.setNomeEditora(novoNome);
+        if(e.getNomeEditora() != null){
+            EditoraService.getInstancia().buscarPorId(id).setNomeEditora(e.getNomeEditora());
         }
-        if(novaDescriçao != null){
-            e.setDescricaoEditora(novaDescriçao);
+        if(e.getDescricaoEditora() != null){
+            EditoraService.getInstancia().buscarPorId(id).setDescricaoEditora(e.getDescricaoEditora());
         }
-
     }
 
 }

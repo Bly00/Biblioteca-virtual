@@ -1,6 +1,8 @@
 package Controller;
 
+import Model.Categoria;
 import Model.Editora;
+import Service.CategoriaService;
 import Service.EditoraService;
 
 import java.util.List;
@@ -131,63 +133,152 @@ public class EditoraController {
 
     public void editar(){
 
-        String nonoNome = null;
+        String opS = null;
+
+        String novoNome = null;
         String novaDescricao = null;
-        int op = 0;
 
-        if(!EditoraService.getInstancia().getEditoras().isEmpty()){
+        Editora e = null;
 
-            System.out.print("Id da editora que sera editada: ");
+        while(true){
 
-            EditoraController.getInstancia().listar();
+            try{
 
-            Editora e = EditoraService.getInstancia().buscarPorId(sc.nextInt());
-            sc.nextLine();
+                System.out.print("0 - Sair \t Id da editora que será editado: ");
 
-            if(e != null){
+                int opN = Integer.parseInt(sc.nextLine());
 
-                System.out.println("Nome atual: " + e.getNomeEditora() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
-
-                op = sc.nextInt();
-                sc.nextLine();
-
-                if(op == 1){
-                System.out.print("Novo nome: ");
-                nonoNome = sc.nextLine();
+                if (opN == 0) {
+                    return;
                 }
 
-                System.out.println("Descricao atual: " + e.getDescricaoEditora() + "\nDeseja mudar?\n1 - Sim\n2 - Nao");
+                e = EditoraService.getInstancia().buscarPorId(opN);
 
-                op = sc.nextInt();
-                sc.nextLine();
-
-                if(op == 1){
-                    System.out.print("Nova descriçao: ");
-                    novaDescricao = sc.nextLine();
+                if(e != null){
+                    break;
+                }else{
+                    System.out.println("\nId invalido\n");
                 }
 
-                EditoraService.getInstancia().editar(e.getIdEditora(), nonoNome,novaDescricao);
-
-            }else{
-                System.out.println("Id invalido");
-                return;
+            }catch (Exception exception){
+                System.out.println("\nOpção invalida\n");
             }
 
-        }else{
-            System.out.println("Nao ha editoras");
         }
 
+        System.out.println("Nome atual: " + e.getNomeEditora());
+
+        while(true){
+
+            System.out.print("Deseja mudar? (s/n): ");
+
+            opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
+
+                System.out.print("Novo nome: ");
+
+                novoNome = sc.nextLine();
+
+                break;
+
+            }else if(opS.equals("n") || opS.equals("N")){
+
+                break;
+
+            }else{
+                System.out.println("Opção invalida");
+            }
+
+        }
+
+        System.out.println("Descrição atual:\n" + e.getDescricaoEditora());
+
+        while(true){
+
+            System.out.print("Deseja mudar? (s/n): ");
+
+            opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
+
+                System.out.print("Nova descrição: ");
+
+                novaDescricao = sc.nextLine();
+
+                break;
+
+            }else if(opS.equals("n") || opS.equals("N")){
+
+                break;
+
+            }else{
+                System.out.println("Opção invalida");
+            }
+
+        }
+
+        if(novoNome != null){
+            System.out.println("Nome: " + e.getNomeEditora() + " --> " + novoNome);
+        }
+        if(novaDescricao != null){
+            System.out.println("Descrição: " + e.getDescricaoEditora() + " --> " + novaDescricao);
+        }
+
+        while(true){
+
+            System.out.print("Confirmar mudanças? (s/n): ");
+
+            opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
+
+                Categoria categoria = new Categoria(novoNome, novaDescricao);
+
+                CategoriaService.getInstancia().editar(e.getIdEditora(), categoria);
+
+                return;
+
+            }else if(opS.equals("n") || opS.equals("N")){
+
+                break;
+
+            }else{
+                System.out.println("Opção invalida");
+            }
+
+        }
     }
 
     public void buscarPorId(){
-        System.out.println("Digite o id:");
 
-        Editora e = EditoraService.getInstancia().buscarPorId(sc.nextInt());
+        while(true){
 
-        if(e != null) {
-            System.out.println(e);
-        }else{
-            System.out.println("Editora nao encontrada");
+            System.out.print("\n0 - Sair \t Id da editora: ");
+
+            try{
+
+                int op = Integer.parseInt(sc.nextLine());
+
+                System.out.println();
+
+                if(op == 0){
+                    return;
+                }
+
+                if(EditoraService.getInstancia().buscarPorId(op) != null){
+
+                    System.out.println(EditoraService.getInstancia().buscarPorId(op));
+                    break;
+
+                }else{
+                    System.out.println("Id invalido");
+                }
+
+            }catch(Exception exception){
+                System.out.println("\nOpção invalida");
+            }
+
         }
 
     }

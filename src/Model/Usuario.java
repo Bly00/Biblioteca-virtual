@@ -67,7 +67,7 @@ public class Usuario {
 //    }
 //
 //    public void devolverLivro(){
-//        //quando necessario, o user pode devolver o livro
+//        //quando necessario, o user pode editar o livro
 //    }
 
 }

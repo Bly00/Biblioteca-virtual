@@ -43,7 +43,7 @@ public class Main {
             System.out.println("\tMENU TESTES");
 
             System.out.println("1 - Livro\n2 - Autor\n3 - Editora\n4 - Categoria\n5 - Usuario\n6 - Emprestimo");
-            
+
             try{
 
                 int op = Integer.parseInt(sc.nextLine());

@@ -85,7 +85,7 @@ public class EmprestimoController {
     }
 
     List<ItemEmprestimo> itens = new ArrayList<>();
-    int op;
+    int op = 0;
 
     while(true){
 
@@ -111,11 +111,16 @@ public class EmprestimoController {
             }
         }
 
+        System.out.println();
 
+        while(true){
+            
+            try{
+            
         System.out.print("0 - Finalizar\tId do livro: ");
-        op = sc.nextInt();
-        sc.nextLine();
-
+        
+        op = Integer.parseInt(sc.nextLine());
+        
         if(op == 0){
             break;
         }
@@ -124,18 +129,34 @@ public class EmprestimoController {
 
         if(livroProcurado == null){
 
-            System.out.println("Livro invalido");
+            System.out.println("\nLivro invalido\n");
+            break;
 
         }else{
-
-
-        if(!livroProcurado.isDisponivel()){
-            System.out.println("Indisponivel");
+            
+            if(!livroProcurado.isDisponivel()){
+            System.out.println("\nIndisponivel\n");
+            
+            break;
+            
         }else{
+                
             livroProcurado.setDisponivel(false);
             itens.add(new ItemEmprestimo(false, livroProcurado));
+            break;
+            
         }
 
+        }
+            
+            }catch(Exception exception){
+                System.out.println("\nOpção invalida\n");
+            }
+            
+        }
+        
+        if(op == 0){
+            break;
         }
 
     }
@@ -147,15 +168,26 @@ public class EmprestimoController {
         Usuario u;
 
     while(true){
-        System.out.println("Id do usuario solicitante: ");
 
-         u = UsuarioService.getInstancia().buscarPorId(sc.nextInt());
+        System.out.print("Id do usuario solicitante: ");
 
-        if(u != null){
-            break;
+        try{
+
+            op = Integer.parseInt(sc.nextLine());
+
+            u = UsuarioService.getInstancia().buscarPorId(op);
+
+            if(u != null){
+                break;
+            }else{
+                System.out.println("\nId invalido\n");
+            }
+
+        }catch(Exception exe){
+
+            System.out.println("\nOpção invalida\n");
+
         }
-
-        System.out.println("Usuario invalido, tente novamente");
 
     }
 
@@ -167,7 +199,7 @@ public class EmprestimoController {
         LocalDate dateDevolucao = dateRealizacao.plusDays(7);
 
 
-        System.out.println("Detalhes do emprestimo: \nData de realizaçao: " + f.format(dateRealizacao) + "\nData de devoluçao: " + f.format(dateDevolucao));
+        System.out.println("\nDetalhes do emprestimo: \nData de realizaçao:\n" + f.format(dateRealizacao) + "\nData de devoluçao: " + f.format(dateDevolucao));
         System.out.println("\nLivros pegos: ");
 
         for(ItemEmprestimo i : itens){
@@ -175,11 +207,11 @@ public class EmprestimoController {
         }
 
         while(true){
-            System.out.println("Deseja realizar emprestimo?\n1 - Sim\n2 - Nao");
-            op = sc.nextInt();
-            sc.nextLine();
 
-            if(op == 1){
+            System.out.print("Deseja realizar emprestimo? (s/n): ");
+            String opS = sc.nextLine();
+
+            if(opS.equals("s") || opS.equals("S")){
 
                 Emprestimo e = new Emprestimo(dateDevolucao, itens, u);
 
@@ -187,9 +219,9 @@ public class EmprestimoController {
 
                 return;
 
-            }
+            }else
 
-            if(op == 2){
+            if(opS.equals("n") || opS.equals("N")){
 
                 for(ItemEmprestimo i : itens){
                     i.getLivroEmprestado().setDisponivel(true);
@@ -197,9 +229,11 @@ public class EmprestimoController {
 
                 return;
 
-            }
+            }else{
 
-            System.out.println("Opção invalida, tente novamente");
+                System.out.println("\nOpção invalida\n");
+
+            }
 
         }
 
@@ -245,13 +279,10 @@ public class EmprestimoController {
 
     }
 
-
-
-
     public void editar(){
 
         if(EmprestimoService.getInstancia().getEmprestimo().isEmpty()){
-            System.out.println("Nao ha emrprestimos");
+            System.out.println("\nNao ha emrprestimos");
             return;
         }
 
@@ -283,22 +314,24 @@ public class EmprestimoController {
                 if(e != null){
                     break;
                 }else{
-                    System.out.println("Id invalido");
+                    System.out.println("\nId invalido\n");
                 }
 
             }catch (Exception exception){
-                System.out.println("Opção invalida");
+                System.out.println("\nOpção invalida\n");
             }
 
         }
 
 
-        System.out.println("Data de devolução registrada: " + dtf.format(e.getDataDevolucaoPrevista()));
+        System.out.println("\nData de devolução registrada: " + dtf.format(e.getDataDevolucaoPrevista()));
 
         while(true){
 
-            System.out.println("Mudar data de devolução? (s/n)");
+            System.out.print("\nMudar data de devolução? (s/n): ");
             opS = sc.nextLine();
+
+            System.out.println();
 
             if(opS.equals("s") || opS.equals("S")){
 
@@ -308,6 +341,8 @@ public class EmprestimoController {
 
                     try{
 
+                        System.out.print("\nNúmero do mês: ");
+
                         mes = Integer.parseInt(sc.nextLine());
 
                         LocalDate.of(LocalDate.now().getYear(), mes, 1);
@@ -316,7 +351,7 @@ public class EmprestimoController {
 
                     }catch(Exception exception){
 
-                        System.out.println("Dado informado invalido");
+                        System.out.println("\nDado informado invalido\n");
 
                     }
 
@@ -336,7 +371,7 @@ public class EmprestimoController {
 
                     }catch(Exception exception){
 
-                        System.out.println("Opção invalida ou dia não compativel com o mês");
+                        System.out.println("Opção invalida ou dia não compativel com o mês\n");
 
                     }
 
@@ -350,18 +385,18 @@ public class EmprestimoController {
 
             }else{
 
-                System.out.println("Opção invalida");
+                System.out.println("Opção invalida\n");
 
             }
         }
 
         if(UsuarioService.getInstancia().getUsuarios().size() > 1){
 
-        System.out.println("Solicitante atual: " + e.getSolicitante().getNome());
+        System.out.println("\nSolicitante atual: " + e.getSolicitante().getNome());
 
         while(true){
 
-            System.out.print("Deseja mudar? (s/n): ");
+            System.out.print("\nDeseja mudar? (s/n): ");
             opS = sc.nextLine();
 
             if(opS.equals("s") || opS.equals("S")){
@@ -412,12 +447,17 @@ public class EmprestimoController {
 
         while(true){
 
-            System.out.print("Deseja devolver algum livro do emprestimo? (s/n): ");
+            System.out.print("Deseja editar algum livro do emprestimo? (s/n): ");
             opS = sc.nextLine();
 
             if(opS.equals("s") || opS.equals("S")){
 
-                editar(e);
+                devolver(e);
+                
+                if(e.getDevolvido()){
+                    return;
+                }
+                
                 break;
 
             }else if (opS.equals("n") || opS.equals("N")){
@@ -476,8 +516,7 @@ public class EmprestimoController {
 
     }
 
-    public void editar(Emprestimo e) {
-
+    public void devolver(Emprestimo e) {
 
         int op = 0;
         String opS;
@@ -608,7 +647,7 @@ public class EmprestimoController {
     public void listar(){
 
       if(EmprestimoService.getInstancia().getEmprestimo().isEmpty()){
-          System.out.println("Sem emprestimos");
+          System.out.println("\nSem emprestimos");
           return;
       }
 
@@ -624,10 +663,12 @@ public class EmprestimoController {
 
           }
 
+
+
           if(e.getDevolvido()){
-              System.out.println("Id: " + e.getIdEmprestimo() + " - Quantidade de livros: " + e.getItensEmprestimo().size() + " (Finalizado)");
+              System.out.println("\nId: " + e.getIdEmprestimo() + " - Quantidade de livros: " + e.getItensEmprestimo().size() + " (Finalizado)");
           }else{
-              System.out.println("Id: " + e.getIdEmprestimo() + " - Quantidade de livros: " + quantLivros + " (Nao finalizado)");
+              System.out.println("\nId: " + e.getIdEmprestimo() + " - Quantidade de livros: " + quantLivros + " (Nao finalizado)");
           }
       }
 
