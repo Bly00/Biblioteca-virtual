@@ -14,6 +14,10 @@ public class Categoria {
         this.nomeCategoria = nomeCategoria;
     }
 
+    public List<Livro> getLivros() {
+        return livros;
+    }
+
     public int getIdCategoria() {
         return idCategoria;
     }

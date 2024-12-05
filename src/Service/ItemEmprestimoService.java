@@ -45,5 +45,9 @@ public class ItemEmprestimoService {
         return ItemEmprestimoRepository.getInstancia().buscarPorId(id);
     }
 
+    public List<ItemEmprestimo> getItens(){
+        return ItemEmprestimoRepository.getInstancia().get();
+    }
+
 
 }

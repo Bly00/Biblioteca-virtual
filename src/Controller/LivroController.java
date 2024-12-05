@@ -131,7 +131,14 @@ public class LivroController {
                 op = Integer.parseInt(sc.nextLine());
 
                 if (op == 0) {
-                    break;
+
+                    if(autores.isEmpty()){
+                        System.out.println("\nPrecisa de pelo menos um autor\n");
+                        continue;
+                    }else{
+                        break;
+                    }
+
                 }
 
                 if (AutorService.getInstancia().buscarPorId(op) != null) {
@@ -203,7 +210,14 @@ public class LivroController {
                 op = Integer.parseInt(sc.nextLine());
 
                 if (op == 0) {
-                    break;
+
+                    if(categorias.isEmpty()){
+                        System.out.println("\nPrecisa de pelo menos uma categoria\n");
+                        continue;
+                    }else{
+                        break;
+                    }
+
                 }
 
                 if (CategoriaService.getInstancia().buscarPorId(op) != null) {
@@ -232,7 +246,13 @@ public class LivroController {
 
                 paginas = Integer.parseInt(sc.nextLine());
 
+                if(paginas > 0){
+
                 break;
+
+                }else{
+                    System.out.println("\nQuantidade de páginas não pode ser menor ou igual a 0\n");
+                }
 
             }catch (Exception exception){
                 System.out.println("Por favar, entre com um numero inteiro");

@@ -34,7 +34,7 @@ public class EmprestimoService {
 
             i.getLivroEmprestado().setItemEmprestimo(i);
 
-            livrosPegos.add(ItemEmprestimoService.getInstancia().adicionar(i.getLivroEmprestado()));
+            livrosPegos.add(i);
 
             i.setDevolucaoPrevista(novoEmprestimo.getDataDevolucaoPrevista());
         }

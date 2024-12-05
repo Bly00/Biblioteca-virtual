@@ -81,95 +81,196 @@ public class EmprestimoController{
 
     public void adicionar(){
 
-    List<Livro> l = LivroService.getInstancia().getLivros();
+        List<ItemEmprestimo> itens = new ArrayList<>();
+        int op;
 
-    if(l.isEmpty()){
-        System.out.println("Nao ha livros");
-        return;
-    }
+        if(status == Status.TESTE){
 
-    List<ItemEmprestimo> itens = new ArrayList<>();
-    int op = 0;
+            List<Livro> l = LivroService.getInstancia().getLivros();
 
-    while(true){
+            if (l.isEmpty()) {
+                System.out.println("Nao ha livros");
+                return;
+            }
 
-        boolean disponiveis = false;
 
-        for(Livro livros : l){
+            op = 0;
 
-            if(livros.isDisponivel()){
-                disponiveis = true;
-                break;
+            while (true) {
+
+                boolean disponiveis = false;
+
+                for (Livro livros : l) {
+
+                    if (livros.isDisponivel()) {
+                        disponiveis = true;
+                        break;
+                    }
+
+                }
+
+                if (!disponiveis) {
+                    System.out.println("Nao mais livros disponiveis");
+                    break;
+                }
+
+                for (Livro livro : l) {
+                    if (livro.isDisponivel()) {
+                        System.out.println("Titulo: " + livro.getTituloDoLivro() + " - ID: " + livro.getIdLivro());
+                    }
+                }
+
+                System.out.println();
+
+                while (true) {
+
+                    try {
+
+                        System.out.print("0 - Finalizar\tId do livro: ");
+
+                        op = Integer.parseInt(sc.nextLine());
+
+                        if (op == 0) {
+                            break;
+                        }
+
+                        Livro livroProcurado = LivroService.getInstancia().buscarPorId(op);
+
+                        if (livroProcurado == null) {
+
+                            System.out.println("\nLivro invalido\n");
+                            break;
+
+                        } else {
+
+                            if (!livroProcurado.isDisponivel()) {
+                                System.out.println("\nIndisponivel\n");
+
+                                break;
+
+                            } else {
+
+                                livroProcurado.setDisponivel(false);
+                                itens.add(new ItemEmprestimo(false, livroProcurado));
+                                break;
+
+                            }
+
+                        }
+
+                    } catch (Exception exception) {
+                        System.out.println("\nOpção invalida\n");
+                    }
+
+                }
+
+                if (op == 0) {
+                    break;
+                }
+
+            }
+
+            if (itens.isEmpty()) {
+                return;
+            }
+
+        }
+        else if(status == Status.SISTEMA){
+
+            List<Livro> l = LivroService.getInstancia().getLivros();
+
+            l.removeIf(livro -> Sistema.getInstancia().getUser().getLivrosDoUsuario().contains(livro));
+
+            if (l.isEmpty()) {
+                System.out.println("\nNao ha livros");
+                return;
+            }
+
+
+            op = 0;
+
+            while (true) {
+
+                boolean disponiveis = false;
+
+                for (Livro livros : l) {
+
+                    if (livros.isDisponivel()) {
+                        disponiveis = true;
+                        break;
+                    }
+
+                }
+
+                if (!disponiveis) {
+                    System.out.println("Nao mais livros disponiveis");
+                    break;
+                }
+
+                for (Livro livro : l) {
+                    if (livro.isDisponivel()) {
+                        System.out.println("Titulo: " + livro.getTituloDoLivro() + " - ID: " + livro.getIdLivro());
+                    }
+                }
+
+                System.out.println();
+
+                while (true) {
+
+                    try {
+
+                        System.out.print("0 - Finalizar\tId do livro: ");
+
+                        op = Integer.parseInt(sc.nextLine());
+
+                        if (op == 0) {
+                            break;
+                        }
+
+                        Livro livroProcurado = LivroService.getInstancia().buscarPorId(op);
+
+                        if (livroProcurado == null) {
+
+                            System.out.println("\nLivro invalido\n");
+                            break;
+
+                        } else {
+
+                            if (!livroProcurado.isDisponivel()) {
+                                System.out.println("\nIndisponivel\n");
+
+                                break;
+
+                            } else {
+
+                                livroProcurado.setDisponivel(false);
+                                itens.add(new ItemEmprestimo(false, livroProcurado));
+                                break;
+
+                            }
+
+                        }
+
+                    } catch (Exception exception) {
+                        System.out.println("\nOpção invalida\n");
+                    }
+
+                }
+
+                if (op == 0) {
+                    break;
+                }
+
+            }
+
+            if (itens.isEmpty()) {
+                return;
             }
 
         }
 
-        if(!disponiveis){
-            System.out.println("Nao mais livros disponiveis");
-            break;
-        }
 
-        for(Livro livro : l){
-            if(livro.isDisponivel()){
-                System.out.println("Titulo: " + livro.getTituloDoLivro() + " - ID: " + livro.getIdLivro());
-            }
-        }
-
-        System.out.println();
-
-        while(true){
-            
-            try{
-            
-        System.out.print("0 - Finalizar\tId do livro: ");
-        
-        op = Integer.parseInt(sc.nextLine());
-        
-        if(op == 0){
-            break;
-        }
-
-        Livro livroProcurado = LivroService.getInstancia().buscarPorId(op);
-
-        if(livroProcurado == null){
-
-            System.out.println("\nLivro invalido\n");
-            break;
-
-        }else{
-            
-            if(!livroProcurado.isDisponivel()){
-            System.out.println("\nIndisponivel\n");
-            
-            break;
-            
-        }else{
-                
-            livroProcurado.setDisponivel(false);
-            itens.add(new ItemEmprestimo(false, livroProcurado));
-            break;
-            
-        }
-
-        }
-            
-            }catch(Exception exception){
-                System.out.println("\nOpção invalida\n");
-            }
-            
-        }
-        
-        if(op == 0){
-            break;
-        }
-
-    }
-
-    if(itens.isEmpty()){
-        return;
-    }
-
-        Usuario u = null;
+            Usuario u = null;
 
         if(status == Status.SISTEMA){
             u = Sistema.getInstancia().getUser();
@@ -564,7 +665,33 @@ public class EmprestimoController{
         List<Emprestimo> emprestimos = new ArrayList<>();
 
         if(status == Status.SISTEMA){
+
             emprestimos = Sistema.getInstancia().getUser().getEmprestimosDoUsuario();
+
+            List<ItemEmprestimo> itens = new ArrayList<>();
+
+            for(ItemEmprestimo i : ItemEmprestimoService.getInstancia().getItens()){
+
+                if(i.isDevolvido()){
+                    itens.add(i);
+                }
+
+            }
+
+            for(Emprestimo emprestimo : emprestimos){
+
+            if(itens.containsAll(emprestimo.getItensEmprestimo())){
+
+                emprestimo.setDevolvido(true);
+
+                emprestimo.setDateDevolucao(LocalDate.now());
+
+                EmprestimoService.getInstancia().editar(emprestimo.getIdEmprestimo(), null, itens, null);
+
+            }
+
+            }
+
         }else{
             emprestimos = EmprestimoService.getInstancia().getEmprestimo();
         }
@@ -573,6 +700,8 @@ public class EmprestimoController{
             System.out.println("\nSem emprestimos");
             return;
         }
+
+
 
         int quantLivros = 0;
 

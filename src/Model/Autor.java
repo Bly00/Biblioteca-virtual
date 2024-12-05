@@ -41,6 +41,10 @@ public class    Autor {
         this.idAutor = idAutor;
     }
 
+    public List<Livro> getLivros(){
+        return livros;
+    }
+
 
 
     //    public void editarAutor(){

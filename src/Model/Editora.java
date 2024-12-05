@@ -15,6 +15,10 @@ public class Editora {
         this.nomeEditora = nomeEditora;
     }
 
+    public List<Livro> getLivros() {
+        return livros;
+    }
+
     public int getIdEditora() {
         return idEditora;
     }
@@ -49,9 +53,6 @@ public class Editora {
         return sb.toString();
     }
 
-//    public void editarEditora(String nome, String descricao) {
-//        this.nomeEditora = nome;
-//        this.descricaoEditora = descricao;
-//    }
+
 
 }

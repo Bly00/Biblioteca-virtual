@@ -1,9 +1,12 @@
 package Service;
 
+import Main.Status;
 import Model.*;
 import Repository.*;
 
 import java.util.List;
+
+import static Main.Main.status;
 
 public class LivroService {
 
@@ -24,7 +27,21 @@ public class LivroService {
 
         LivroRepository.getInstancia().salvarLivro(l);
 
+        for(Autor a : l.getAutores()){
+            a.getLivros().add(l);
+        }
+
+        for(Categoria a : l.getCategorias()){
+            a.getLivros().add(l);
+        }
+
+        l.getEditora().getLivros().add(l);
+
+        if(status == Status.SISTEMA){
+
         l.getDono().getLivrosDoUsuario().add(l);
+
+        }
 
         return l;
 

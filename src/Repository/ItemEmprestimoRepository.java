@@ -2,7 +2,9 @@ package Repository;
 
 import Model.ItemEmprestimo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ItemEmprestimoRepository {
@@ -36,6 +38,8 @@ public class ItemEmprestimoRepository {
         return itens.get(id);
     }
 
-
+    public List<ItemEmprestimo> get(){
+        return new ArrayList<>(itens.values());
+    }
 
 }
